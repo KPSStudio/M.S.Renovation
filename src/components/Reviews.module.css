@@ -18,9 +18,10 @@
 .carouselContainer {
   background: var(--light);
   border-radius: var(--radius-md);
-  padding: 3rem;
+  padding: var(--spacing-xl);
   overflow: hidden;
   border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
 }
 
 /* The track shifts left by 100% per slide; transform is set inline based on currentSlide state */
@@ -42,7 +43,7 @@
   color: var(--gold);
   font-size: 1rem;
   letter-spacing: 2px;
-  margin-bottom: 1.2rem;
+  margin-bottom: var(--spacing-sm);
 }
 
 .reviewText {
@@ -50,7 +51,7 @@
   font-size: 1.08rem;
   line-height: 1.9;
   font-style: italic;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--spacing-md);
   font-weight: 400;
 }
 
@@ -64,7 +65,7 @@
 .reviewBudgetValue {
   color: var(--muted);
   font-size: 0.85rem;
-  margin-top: 0.4rem;
+  margin-top: var(--spacing-xs);
   font-weight: 600;
 }
 
@@ -72,8 +73,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2.5rem;
-  margin-top: 3rem;
+  gap: var(--spacing-xl);
+  margin-top: var(--spacing-xl);
 }
 
 .carouselDotsWrapper {
@@ -118,7 +119,7 @@
 .carouselArrowButton:hover {
   background: var(--stone-darker);
   transform: scale(1.12);
-  box-shadow: 0 6px 16px rgba(107, 83, 68, 0.25);
+  box-shadow: var(--shadow-stone-sm);
 }
 
 .carouselArrowButton:active {
@@ -129,14 +130,14 @@
   text-align: center;
   font-size: 0.85rem;
   color: var(--muted);
-  margin-top: 1.5rem;
+  margin-top: var(--spacing-md);
   font-weight: 600;
 }
 
 .trustedTraderLink {
   display: block;
   text-align: center;
-  margin-top: 2rem;
+  margin-top: var(--spacing-lg);
   color: var(--stone-dark);
   text-decoration: none;
   font-weight: 700;
@@ -154,10 +155,10 @@
   }
 
   .carouselContainer {
-    padding: 1.5rem;
+    padding: var(--spacing-md);
   }
 
   .carouselControls {
-    gap: 1.5rem;
+    gap: var(--spacing-md);
   }
 }

@@ -1,0 +1,90 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://msrenovation.co.uk/#business",
+      "name": "M.S. Renovation",
+      "description": "Professional painter, decorator, and home improvement contractor in Aberdeen, Scotland. Trusted Trader certified with a 5-star rating.",
+      "url": "https://msrenovation.co.uk/",
+      "telephone": "+447572916190",
+      "email": "kamilszynklewski@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "9 Oldtown Place",
+        "addressLocality": "Aberdeen",
+        "addressRegion": "Scotland",
+        "postalCode": "AB16 7LR",
+        "addressCountry": "GB"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 57.1045,
+        "longitude": -2.0947
+      },
+      "areaServed": [
+        { "@type": "City", "name": "Aberdeen" },
+        { "@type": "Region", "name": "Aberdeenshire" },
+        { "@type": "Region", "name": "Scotland" }
+      ],
+      "priceRange": "£1-£25000+",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5.0",
+        "ratingCount": "16",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "sameAs": [
+        "https://www.facebook.com/m.s.renovationaberdeen",
+        "https://www.trustedtrader.scot/Aberdeen/MSRenovation-0001955.html"
+      ],
+      "knowsAbout": [
+        "Painting and Decorating",
+        "Plastering and Taping",
+        "Carpentry and Joinery",
+        "Bathroom Refurbishment",
+        "Kitchen Fitting",
+        "Property Repair and Maintenance"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://msrenovation.co.uk/" },
+        { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://msrenovation.co.uk/#services" },
+        { "@type": "ListItem", "position": 3, "name": "Our Work", "item": "https://msrenovation.co.uk/gallery" },
+        { "@type": "ListItem", "position": 4, "name": "Contact", "item": "https://msrenovation.co.uk/#contact" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What areas do you serve?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We serve Aberdeen, Aberdeenshire, and the surrounding areas of Scotland."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are you certified?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, we are a member of the Aberdeen Trusted Trader scheme, supported by Police Scotland and Aberdeen City Council, with a 5.0 star rating from 16 reviews."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I get a quote?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Contact us via WhatsApp, phone on 07572 916190, or through the contact form on this website."
+          }
+        }
+      ]
+    }
+  ]
+}

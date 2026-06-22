@@ -18,7 +18,7 @@
 .galleryCallToActionText {
   font-size: 1.1rem;
   color: var(--text-gray);
-  margin-bottom: 3rem;
+  margin-bottom: var(--spacing-xl);
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
@@ -27,7 +27,7 @@
 
 .galleryCallToActionButton {
   display: inline-block;
-  padding: 1rem 2.2rem;
+  padding: var(--spacing-sm) var(--spacing-lg);
   text-decoration: none;
   font-weight: 700;
   font-size: 0.95rem;
@@ -43,7 +43,7 @@
 .galleryCallToActionButton:hover {
   background: var(--stone-darker);
   transform: translateY(-4px);
-  box-shadow: 0 10px 24px rgba(107, 83, 68, 0.3);
+  box-shadow: var(--shadow-stone-lg);
 }
 
 @media (max-width: 768px) {

@@ -10,7 +10,7 @@ const SERVICES_LIST: Service[] = [
   {
     title: 'Painting and Decorating',
     description:
-      'Expert interior and exterior painting with premium finishes and meticulous attention to detail.',
+      'Expert interior and exterior painting throughout Aberdeen, with premium finishes and meticulous attention to detail.',
   },
   {
     title: 'Plastering and Taping',
@@ -23,7 +23,8 @@ const SERVICES_LIST: Service[] = [
   },
   {
     title: 'Bathroom Refurbishment',
-    description: 'Complete bathroom renovations with professional tiling and installations.',
+    description:
+      'Complete bathroom renovations for Aberdeen homes, with professional tiling and installations.',
   },
   {
     title: 'Kitchen Fitting',
@@ -32,7 +33,7 @@ const SERVICES_LIST: Service[] = [
   },
   {
     title: 'Property Repair and Maintenance',
-    description: 'Rapid response to damage, repairs, and ongoing maintenance work.',
+    description: 'Rapid response to damage, repairs, and ongoing maintenance work across Aberdeenshire.',
   },
 ];
 
