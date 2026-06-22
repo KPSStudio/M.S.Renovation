@@ -6,17 +6,12 @@
 
 .certificateSection {
   background: var(--light);
-  padding: 6rem 2rem;
+  padding: var(--spacing-2xl) var(--spacing-lg);
   text-align: center;
 }
 
 .sectionHeading {
-  font-family: system-ui, serif;
-  font-size: 3rem;
-  color: var(--dark);
-  margin-bottom: 3rem;
-  font-weight: 600;
-  letter-spacing: -0.8px;
+  text-align: center;
 }
 
 .certificateContainer {
@@ -25,10 +20,10 @@
 }
 
 .certificateImageWrapper {
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
-  transition: all 0.4s ease;
+  transition: all var(--transition-smooth);
 }
 
 .certificateImageWrapper:hover {
@@ -48,20 +43,16 @@
   font-size: 0.95rem;
   font-weight: 400;
   line-height: 1.8;
+  margin-bottom: 0;
 }
 
 .certificateCaption strong {
-  color: var(--stone);
+  color: var(--stone-dark);
   font-weight: 600;
 }
 
 @media (max-width: 768px) {
   .certificateSection {
     padding: 3rem 1.5rem;
-  }
-
-  .sectionHeading {
-    font-size: 2rem;
-    margin-bottom: 2.5rem;
   }
 }

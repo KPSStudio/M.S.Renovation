@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import styles from '../styles/Hero.module.css';
+import type { ReactElement } from 'react';
+import styles from './Hero.module.css';
 
 /*
   Hero Component
@@ -8,7 +9,7 @@ import styles from '../styles/Hero.module.css';
   All entrance animation is handled in CSS via animation-delay, so this
   component itself has no client-side logic and can stay a server component.
 */
-const Hero = () => {
+const Hero = (): ReactElement => {
   return (
     <section className={styles.heroSection}>
       <div className={styles.heroContent}>

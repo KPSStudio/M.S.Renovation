@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import styles from '../styles/Reviews.module.css';
+import { useEffect, useRef, useState, type ReactElement } from 'react';
+import type { Review } from '@/types';
+import styles from './Reviews.module.css';
 
 /* The 5 reviews shown in the carousel, taken from Trusted Trader */
-const REVIEWS_LIST = [
+const REVIEWS_LIST: Review[] = [
   {
     text:
       'Repair to ceilings after leak, and redecoration. Absolutely delighted with the quality and finish of the work done. Maciej was very helpful, and his skill and attention to detail was excellent. Definitely highly recommend him!',
@@ -47,19 +48,19 @@ const TOTAL_SLIDES = REVIEWS_LIST.length;
   dot indicator. Any manual interaction resets the auto-rotate timer
   so it doesn't immediately jump again right after a manual change.
 */
-const Reviews = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const autoRotateTimerRef = useRef(null);
+const Reviews = (): ReactElement => {
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
+  const autoRotateTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const goToSlide = (slideIndex) => {
+  const goToSlide = (slideIndex: number): void => {
     setCurrentSlide(slideIndex);
   };
 
-  const goToNextSlide = () => {
+  const goToNextSlide = (): void => {
     setCurrentSlide((slide) => (slide + 1) % TOTAL_SLIDES);
   };
 
-  const goToPreviousSlide = () => {
+  const goToPreviousSlide = (): void => {
     setCurrentSlide((slide) => (slide - 1 + TOTAL_SLIDES) % TOTAL_SLIDES);
   };
 
@@ -67,7 +68,9 @@ const Reviews = () => {
   // that change came from the timer itself or a manual click
   useEffect(() => {
     autoRotateTimerRef.current = setInterval(goToNextSlide, AUTO_ROTATE_INTERVAL_MS);
-    return () => clearInterval(autoRotateTimerRef.current);
+    return () => {
+      if (autoRotateTimerRef.current) clearInterval(autoRotateTimerRef.current);
+    };
   }, [currentSlide]);
 
   return (

@@ -1,10 +1,11 @@
 import Link from 'next/link';
-import Hero from './components/Hero';
-import Services from './components/Services';
-import Certificate from './components/Certificate';
-import Reviews from './components/Reviews';
-import Contact from './components/Contact';
-import homeStyles from './styles/Home.module.css';
+import type { ReactElement } from 'react';
+import Hero from '@/components/Hero';
+import Services from '@/components/Services';
+import Certificate from '@/components/Certificate';
+import Reviews from '@/components/Reviews';
+import Contact from '@/components/Contact';
+import homeStyles from './page.module.css';
 
 /*
   Homepage
@@ -12,7 +13,7 @@ import homeStyles from './styles/Home.module.css';
   call-to-action banner, the Trusted Trader Certificate, the Reviews
   carousel, and the Contact form, in that order.
 */
-export default function HomePage() {
+export default function HomePage(): ReactElement {
   return (
     <main>
       <Hero />

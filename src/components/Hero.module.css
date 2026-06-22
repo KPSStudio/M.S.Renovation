@@ -17,13 +17,8 @@
 }
 
 .heroHeadline {
-  font-family: system-ui, serif;
-  font-size: 3.8rem;
-  color: var(--dark);
+  text-align: center;
   margin-bottom: 1.2rem;
-  font-weight: 600;
-  letter-spacing: -1.2px;
-  line-height: 1.15;
   animation: fadeInUp 0.7s ease-out;
 }
 
@@ -44,9 +39,9 @@
   padding: 0.9rem 2rem;
   border-radius: 50px;
   margin-bottom: 2.5rem;
-  border: 2px solid var(--stone);
+  border: 2px solid var(--stone-dark);
   animation: scaleIn 0.6s ease-out 0.3s backwards;
-  box-shadow: 0 4px 16px rgba(139, 115, 85, 0.12);
+  box-shadow: 0 4px 16px rgba(107, 83, 68, 0.12);
 }
 
 .ratingStars {
@@ -57,7 +52,7 @@
 
 .ratingText {
   font-weight: 700;
-  color: var(--stone);
+  color: var(--stone-dark);
   font-size: 0.95rem;
 }
 
@@ -76,28 +71,28 @@
   font-size: 0.95rem;
   border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
-  border-radius: 4px;
+  transition: all var(--transition-normal);
+  border-radius: var(--radius-md);
   font-family: system-ui, serif;
   display: inline-block;
   min-height: 48px;
 }
 
 .primaryButton {
-  background: var(--stone);
+  background: var(--stone-dark);
   color: white;
 }
 
 .primaryButton:hover {
-  background: var(--stone-dark);
+  background: var(--stone-darker);
   transform: translateY(-4px);
-  box-shadow: 0 10px 24px rgba(139, 115, 85, 0.3);
+  box-shadow: 0 10px 24px rgba(107, 83, 68, 0.3);
 }
 
 .secondaryButton {
   background: transparent;
-  color: var(--stone);
-  border: 2px solid var(--stone);
+  color: var(--stone-dark);
+  border: 2px solid var(--stone-dark);
 }
 
 .secondaryButton:hover {
@@ -130,10 +125,6 @@
 @media (max-width: 768px) {
   .heroSection {
     padding: 3rem 1.5rem;
-  }
-
-  .heroHeadline {
-    font-size: 2.2rem;
   }
 
   .heroSubheading {

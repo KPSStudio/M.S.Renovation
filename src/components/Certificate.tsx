@@ -1,14 +1,17 @@
 import Image from 'next/image';
-import styles from '../styles/Certificate.module.css';
+import type { ReactElement } from 'react';
+import styles from './Certificate.module.css';
 
 /*
   Certificate Component
   Displays the Aberdeen Trusted Trader certificate image from the
   public folder, along with a caption explaining the scheme and the
   certificate's validity date. Uses next/image for automatic
-  optimization and responsive sizing.
+  optimization and responsive sizing. The intrinsic width/height
+  (1448x2048) match the source file so the aspect ratio is preserved
+  when CSS scales it down to 100% width.
 */
-const Certificate = () => {
+const Certificate = (): ReactElement => {
   return (
     <section className={styles.certificateSection}>
       <h2 className={styles.sectionHeading}>Trusted and Certified</h2>

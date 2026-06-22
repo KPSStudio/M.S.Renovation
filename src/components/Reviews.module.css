@@ -6,24 +6,18 @@
 
 .reviewsSection {
   background: white;
-  padding: 6rem 2rem;
+  padding: var(--spacing-2xl) var(--spacing-lg);
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .sectionHeading {
-  font-family: system-ui, serif;
-  font-size: 3rem;
-  color: var(--dark);
-  margin-bottom: 4rem;
   text-align: center;
-  font-weight: 600;
-  letter-spacing: -0.8px;
 }
 
 .carouselContainer {
   background: var(--light);
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   padding: 3rem;
   overflow: hidden;
   border: 1px solid var(--border-light);
@@ -61,7 +55,7 @@
 }
 
 .reviewAuthor {
-  color: var(--stone);
+  color: var(--stone-dark);
   font-weight: 700;
   font-size: 0.95rem;
   font-family: system-ui, serif;
@@ -95,18 +89,18 @@
   background: #d4c4b0;
   border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all var(--transition-normal);
   padding: 0;
 }
 
 .carouselDotActive {
-  background: var(--stone);
+  background: var(--stone-dark);
   width: 28px;
   border-radius: 5px;
 }
 
 .carouselArrowButton {
-  background: var(--stone);
+  background: var(--stone-dark);
   color: white;
   border: none;
   width: 48px;
@@ -114,7 +108,7 @@
   border-radius: 50%;
   font-size: 1.4rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all var(--transition-normal);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -122,9 +116,9 @@
 }
 
 .carouselArrowButton:hover {
-  background: var(--stone-dark);
+  background: var(--stone-darker);
   transform: scale(1.12);
-  box-shadow: 0 6px 16px rgba(139, 115, 85, 0.25);
+  box-shadow: 0 6px 16px rgba(107, 83, 68, 0.25);
 }
 
 .carouselArrowButton:active {
@@ -143,11 +137,11 @@
   display: block;
   text-align: center;
   margin-top: 2rem;
-  color: var(--stone);
+  color: var(--stone-dark);
   text-decoration: none;
   font-weight: 700;
   font-size: 0.95rem;
-  transition: all 0.3s ease;
+  transition: all var(--transition-normal);
 }
 
 .trustedTraderLink:hover {
@@ -157,11 +151,6 @@
 @media (max-width: 768px) {
   .reviewsSection {
     padding: 3rem 1.5rem;
-  }
-
-  .sectionHeading {
-    font-size: 2rem;
-    margin-bottom: 2.5rem;
   }
 
   .carouselContainer {

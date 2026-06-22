@@ -1,11 +1,12 @@
 'use client';
 
-import Link from 'next/link';
-import useScrollAnimation from '../hooks/useScrollAnimation';
-import styles from '../styles/Gallery.module.css';
+import type { ReactElement } from 'react';
+import useScrollAnimation from '@/utils/useScrollAnimation';
+import type { Project } from '@/types';
+import styles from './GalleryGrid.module.css';
 
-/* The 3 before/after project showcases displayed on this page */
-const PROJECTS_LIST = [
+/* The 3 before/after project showcases displayed on the gallery page */
+const PROJECTS_LIST: Project[] = [
   {
     title: 'Water-Damaged Ceiling Repair',
     description:
@@ -41,22 +42,25 @@ const PROJECTS_LIST = [
   },
 ];
 
+interface ProjectShowcaseProps {
+  project: Project;
+}
+
 /*
   ProjectShowcase
   A single before/after project block: heading and description,
   a before/after image pair (placeholder graphics until real photos
   are added to public/photos), and a project scope details box.
-  Fades in on scroll using useScrollAnimation.
-  props: { project: { title, description, details }, delayIndex: number }
+  Fades in on scroll using useScrollAnimation, paired with the global
+  "scroll-animate"/"scroll-animate-stagger" utility classes.
 */
-const ProjectShowcase = ({ project, delayIndex }) => {
+const ProjectShowcase = ({ project }: ProjectShowcaseProps): ReactElement => {
   const [projectRef, isVisible] = useScrollAnimation();
-  const delayClassName = `scrollAnimateDelay${(delayIndex % 3) + 1}`;
 
   return (
     <div
       ref={projectRef}
-      className={`scrollAnimate ${delayClassName} ${isVisible ? 'visible' : ''}`}
+      className={`scroll-animate scroll-animate-stagger ${isVisible ? 'visible' : ''}`}
     >
       <div className={styles.projectHeader}>
         <h2 className={styles.projectHeaderTitle}>{project.title}</h2>
@@ -99,40 +103,20 @@ const ProjectShowcase = ({ project, delayIndex }) => {
 };
 
 /*
-  Gallery Page
-  Showcases completed projects as before/after pairs with a scope
-  details box for each, followed by a closing call-to-action linking
-  back to the homepage contact form.
+  GalleryGrid Component
+  Renders the stacked list of before/after project showcases used on
+  the gallery page.
 */
-export default function GalleryPage() {
+const GalleryGrid = (): ReactElement => {
   return (
-    <main>
-      <section className={styles.pageHeader}>
-        <h1 className={styles.pageHeaderTitle}>Our Work</h1>
-        <p className={styles.pageHeaderText}>
-          A portfolio of transformation. Each project showcases our commitment to quality,
-          attention to detail, and customer satisfaction.
-        </p>
-      </section>
-
-      <section className={styles.gallerySection}>
-        <div className={styles.galleryGrid}>
-          {PROJECTS_LIST.map((project, index) => (
-            <ProjectShowcase key={project.title} project={project} delayIndex={index} />
-          ))}
-        </div>
-      </section>
-
-      <section className={styles.galleryCallToActionSection}>
-        <h2 className={styles.galleryCallToActionHeading}>Ready to Transform Your Space?</h2>
-        <p className={styles.galleryCallToActionText}>
-          Every project starts with a conversation. Contact us for a free quote and consultation
-          about your renovation needs.
-        </p>
-        <Link href="/#contact" className={styles.galleryCallToActionButton}>
-          Get Your Quote
-        </Link>
-      </section>
-    </main>
+    <section className={styles.gallerySection}>
+      <div className={styles.galleryGrid}>
+        {PROJECTS_LIST.map((project) => (
+          <ProjectShowcase key={project.title} project={project} />
+        ))}
+      </div>
+    </section>
   );
-}
+};
+
+export default GalleryGrid;

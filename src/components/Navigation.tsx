@@ -1,43 +1,54 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactElement } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import styles from '../styles/Navigation.module.css';
+import type { NavLink } from '@/types';
+import styles from './Navigation.module.css';
 
 /*
   Navigation Component
   Sticky header shown on every page. Shows the business logo on the
   left and four links on the right: Services, Our Work, Reviews, Contact.
 
-  Active state logic:
-  - On the gallery page, "Our Work" is always highlighted.
-  - On the homepage, the link for whichever section is currently
-    scrolled into view gets the active underline, tracked via a
-    scroll listener that checks each section's offsetTop.
-  - On mobile, the links collapse behind a toggle button.
+  Two independent scroll-driven behaviors:
+  - Darken effect: once window.scrollY passes 50px, the header swaps
+    from a flat white background to a gradient with a heavier
+    stone-dark border and a shadow (isScrolled state).
+  - Active-section tracking: on the homepage, whichever section is
+    currently scrolled into view gets the active underline, tracked
+    by checking each section's offsetTop (activeSection state). The
+    gallery page has no in-page sections, so "Our Work" is always
+    shown active there instead.
+
+  On mobile, the links collapse behind a toggle button.
 */
-const NAVIGATION_LINKS = [
-  { label: 'Services', sectionId: 'services' },
-  { label: 'Our Work', href: '/gallery' },
-  { label: 'Reviews', sectionId: 'reviews' },
-  { label: 'Contact', sectionId: 'contact' },
+const NAVIGATION_LINKS: NavLink[] = [
+  { label: 'Services', href: '#services', id: 'services' },
+  { label: 'Our Work', href: '/gallery', id: 'gallery' },
+  { label: 'Reviews', href: '#reviews', id: 'reviews' },
+  { label: 'Contact', href: '#contact', id: 'contact' },
 ];
 
-const Navigation = () => {
+const Navigation = (): ReactElement => {
   const pathname = usePathname();
   const isGalleryPage = pathname === '/gallery';
 
-  // Tracks which homepage section id is currently active while scrolling
-  const [activeSection, setActiveSection] = useState('');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  /* True once the page has scrolled past 50px, drives the header darken effect */
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+
+  /* Tracks which homepage section id is currently active while scrolling */
+  const [activeSection, setActiveSection] = useState<string>('');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    // Active-section-on-scroll tracking only applies to the homepage,
-    // since the gallery page has no in-page sections to track.
-    if (isGalleryPage) return;
+    const handleScroll = (): void => {
+      setIsScrolled(window.scrollY > 50);
 
-    const handleScroll = () => {
+      // Active-section-on-scroll tracking only applies to the homepage,
+      // since the gallery page has no in-page sections to track.
+      if (isGalleryPage) return;
+
       const sectionIds = ['services', 'reviews', 'contact'];
       let currentSection = '';
 
@@ -56,12 +67,14 @@ const Navigation = () => {
   }, [isGalleryPage]);
 
   // Closes the mobile menu whenever a link is clicked
-  const handleLinkClick = () => {
+  const handleLinkClick = (): void => {
     setIsMobileMenuOpen(false);
   };
 
+  const headerClassName = `${styles.header} ${isScrolled ? styles.headerScrolled : styles.headerAtTop}`;
+
   return (
-    <header className={styles.header}>
+    <header className={headerClassName}>
       <nav className={styles.navigationBar}>
         {/* Logo links back to the homepage */}
         <Link href="/" className={styles.logoLink}>
@@ -86,15 +99,14 @@ const Navigation = () => {
         >
           {NAVIGATION_LINKS.map((link) => {
             // "Our Work" is a real page link, the rest are homepage anchors
-            if (link.href) {
-              const isActive = isGalleryPage;
+            if (link.id === 'gallery') {
               return (
                 <li key={link.label}>
                   <Link
                     href={link.href}
                     onClick={handleLinkClick}
                     className={
-                      isActive
+                      isGalleryPage
                         ? `${styles.navigationLink} ${styles.navigationLinkActive}`
                         : styles.navigationLink
                     }
@@ -105,8 +117,8 @@ const Navigation = () => {
               );
             }
 
-            const anchorHref = isGalleryPage ? `/#${link.sectionId}` : `#${link.sectionId}`;
-            const isActive = !isGalleryPage && activeSection === link.sectionId;
+            const anchorHref = isGalleryPage ? `/${link.href}` : link.href;
+            const isActive = !isGalleryPage && activeSection === link.id;
 
             return (
               <li key={link.label}>

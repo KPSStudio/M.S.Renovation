@@ -1,35 +1,11 @@
 /*
-  Gallery Page Styles
-  Page header banner, then a stacked list of before/after project
-  showcases, each with a details box, followed by a closing CTA.
+  GalleryGrid Styles
+  Stacked list of before/after project showcases, each with an
+  image pair and a project scope details box.
 */
 
-.pageHeader {
-  padding: 5rem 2rem;
-  text-align: center;
-  background: linear-gradient(135deg, #ffffff 0%, var(--light) 100%);
-  border-bottom: 2px solid var(--border-light);
-}
-
-.pageHeaderTitle {
-  font-family: system-ui, serif;
-  font-size: 3.2rem;
-  color: var(--dark);
-  margin-bottom: 1rem;
-  font-weight: 600;
-  letter-spacing: -0.8px;
-}
-
-.pageHeaderText {
-  font-size: 1.08rem;
-  color: var(--text-gray);
-  max-width: 600px;
-  margin: 0 auto;
-  font-weight: 400;
-}
-
 .gallerySection {
-  padding: 6rem 2rem;
+  padding: var(--spacing-2xl) var(--spacing-lg);
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -46,12 +22,8 @@
 }
 
 .projectHeaderTitle {
-  font-family: system-ui, serif;
   font-size: 2.2rem;
-  color: var(--dark);
   margin-bottom: 1rem;
-  font-weight: 600;
-  letter-spacing: -0.5px;
 }
 
 .projectHeaderText {
@@ -80,12 +52,11 @@
   display: block;
   font-size: 0.85rem;
   font-weight: 700;
-  color: var(--stone);
+  color: var(--stone-dark);
   text-transform: uppercase;
   letter-spacing: 1.5px;
   margin-bottom: 1.2rem;
   text-align: center;
-  font-family: system-ui, serif;
 }
 
 /* Placeholder image block. Has a diagonal hatch pattern via ::before
@@ -93,25 +64,25 @@
 .imageContainer {
   position: relative;
   aspect-ratio: 1;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-smooth);
   border: 2px solid var(--border-light);
 }
 
 .imageSide:hover .imageContainer {
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
   transform: translateY(-4px);
-  border-color: var(--stone);
+  border-color: var(--stone-dark);
 }
 
 .imageContainerBefore {
-  background: linear-gradient(135deg, var(--stone) 0%, var(--muted) 100%);
-  border-color: var(--stone);
+  background: linear-gradient(135deg, var(--stone-dark) 0%, var(--muted) 100%);
+  border-color: var(--stone-dark);
 }
 
 .imageContainerAfter {
@@ -144,23 +115,21 @@
 .projectDetails {
   background: white;
   padding: 2.5rem;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   border: 2px solid var(--border-light);
-  border-left: 6px solid var(--stone);
-  transition: all 0.3s ease;
+  border-left: 6px solid var(--stone-dark);
+  transition: all var(--transition-normal);
 }
 
 .projectDetails:hover {
-  border-color: var(--stone);
-  box-shadow: 0 8px 24px rgba(139, 115, 85, 0.1);
+  border-color: var(--stone-dark);
+  box-shadow: 0 8px 24px rgba(107, 83, 68, 0.1);
 }
 
 .projectDetailsTitle {
-  color: var(--stone);
+  color: var(--stone-dark);
   font-size: 1.2rem;
   margin-bottom: 1.5rem;
-  font-weight: 700;
-  font-family: system-ui, serif;
 }
 
 .projectDetailsList {
@@ -179,68 +148,11 @@
 }
 
 .projectDetailsListItem strong {
-  color: var(--stone);
+  color: var(--stone-dark);
   font-weight: 700;
-}
-
-.galleryCallToActionSection {
-  background: linear-gradient(135deg, white 0%, var(--light) 100%);
-  padding: 5rem 2rem;
-  text-align: center;
-  border-top: 2px solid var(--border-light);
-  margin-top: 4rem;
-}
-
-.galleryCallToActionHeading {
-  font-family: system-ui, serif;
-  font-size: 2.5rem;
-  color: var(--dark);
-  margin-bottom: 1.5rem;
-  font-weight: 600;
-  letter-spacing: -0.5px;
-}
-
-.galleryCallToActionText {
-  font-size: 1.08rem;
-  color: var(--text-gray);
-  margin-bottom: 2.5rem;
-  font-weight: 400;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.galleryCallToActionButton {
-  display: inline-block;
-  background: var(--stone);
-  color: white;
-  padding: 1rem 2.2rem;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 0.95rem;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-  border: none;
-  cursor: pointer;
-  font-family: system-ui, serif;
-  min-height: 48px;
-}
-
-.galleryCallToActionButton:hover {
-  background: var(--stone-dark);
-  transform: translateY(-4px);
-  box-shadow: 0 10px 24px rgba(139, 115, 85, 0.3);
 }
 
 @media (max-width: 768px) {
-  .pageHeader {
-    padding: 3rem 1.5rem;
-  }
-
-  .pageHeaderTitle {
-    font-size: 2rem;
-  }
-
   .gallerySection {
     padding: 3rem 1.5rem;
   }
@@ -260,13 +172,5 @@
   .imageContainer {
     aspect-ratio: auto;
     min-height: 250px;
-  }
-
-  .galleryCallToActionSection {
-    padding: 3rem 1.5rem;
-  }
-
-  .galleryCallToActionHeading {
-    font-size: 1.8rem;
   }
 }

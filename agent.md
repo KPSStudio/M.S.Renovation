@@ -4,8 +4,8 @@
 M.S. Renovation is a premium brochure website for a home improvement and renovation business based in Aberdeen, Scotland. The business is owned and operated by Maciej (Matt), a highly-rated tradesman with a perfect 5-star rating on Trusted Trader.
 
 ## Current Status
-- **Phase**: Development (transitioning from HTML demo to Next.js production)
-- **Demo**: Available in root folder as `index.html` and `gallery.html`
+- **Phase**: Production-ready. Migrated to TypeScript with a `src/` directory structure.
+- **Demo**: HTML demos and the original JavaScript prototype have been removed; see README.md.
 - **Target Deployment**: Vercel
 
 ## Business Information
@@ -19,41 +19,41 @@ M.S. Renovation is a premium brochure website for a home improvement and renovat
 - **Social**: Facebook: m.s.renovationaberdeen, Instagram: m.s_renovation
 
 ## Tech Stack
-- **Framework**: Next.js 14+
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript (strict mode, `noUnusedLocals`/`noUnusedParameters` enabled)
 - **Hosting**: Vercel
 - **Styling**: CSS modules (no frameworks like Tailwind)
 - **Fonts**: System fonts (avoid ampersands - use "and" text instead)
-- **Icons**: React Icons or SVG (WhatsApp and Facebook logos)
+- **Icons**: React Icons (WhatsApp and Facebook logos)
 - **Responsiveness**: Mobile-first, desktop optimized
 
 ## Project Structure
 ```
 M.S.Renovation/
-├── app/
-│   ├── layout.js (Main layout with header/footer)
-│   ├── page.js (Homepage)
-│   ├── gallery/
-│   │   └── page.js (Gallery page)
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx (Main layout with header/footer)
+│   │   ├── page.tsx (Homepage)
+│   │   ├── page.module.css
+│   │   ├── globals.css (palette, reset, base typography, scroll-animate utilities)
+│   │   └── gallery/
+│   │       ├── page.tsx (Gallery page)
+│   │       └── page.module.css
 │   ├── components/
-│   │   ├── Hero.js
-│   │   ├── Services.js
-│   │   ├── Certificate.js
-│   │   ├── Reviews.js
-│   │   ├── Contact.js
-│   │   ├── Navigation.js
-│   │   └── Footer.js
-│   └── styles/
-│       ├── globals.css
-│       ├── Hero.module.css
-│       ├── Services.module.css
-│       ├── Gallery.module.css
-│       ├── Reviews.module.css
-│       ├── Contact.module.css
-│       ├── Navigation.module.css
-│       └── Footer.module.css
+│   │   ├── Navigation.tsx + Navigation.module.css (includes scroll-darken effect)
+│   │   ├── Hero.tsx + Hero.module.css
+│   │   ├── Services.tsx + Services.module.css
+│   │   ├── Certificate.tsx + Certificate.module.css
+│   │   ├── Reviews.tsx + Reviews.module.css
+│   │   ├── Contact.tsx + Contact.module.css
+│   │   ├── GalleryGrid.tsx + GalleryGrid.module.css
+│   │   └── Footer.tsx + Footer.module.css
+│   ├── types/index.ts (shared interfaces)
+│   └── utils/useScrollAnimation.ts (Intersection Observer hook)
 ├── public/
-│   ├── certificate.jpeg
-│   └── (photos folder for before/after images when available)
+│   ├── certificate.jpg
+│   └── photos/ (before/after images when available)
+├── tsconfig.json
 ├── README.md (Project overview - updated with each change)
 ├── agent.md (This file)
 └── package.json
@@ -159,16 +159,12 @@ M.S.Renovation/
 - Use these as design reference/inspiration only
 
 ## Next Steps
-1. Set up Next.js project structure
-2. Create all components from demo HTML
-3. Implement scroll animations with Intersection Observer
-4. Add WhatsApp and Facebook logo icons
-5. Test responsive design on mobile/tablet
-6. Deploy to Vercel
-7. Delete demo HTML files once confirmed working
+1. Drop real before/after project photos into `public/photos/` and wire them into
+   `src/components/GalleryGrid.tsx`, replacing the gradient placeholders
+2. Deploy to Vercel
 
 ## Notes
-- Certificate file is JPEG format (not JPG)
+- Certificate file is `public/certificate.jpg` (.jpg, not .jpeg)
 - Font ampersand issue: Avoid using "&" character - use "and" text instead
 - Photos folder structure ready but currently empty (use placeholders)
 - All links and contact information verified from Trusted Trader listing

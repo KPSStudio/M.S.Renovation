@@ -1,11 +1,12 @@
-import styles from '../styles/Footer.module.css';
+import type { ReactElement } from 'react';
+import styles from './Footer.module.css';
 
 /*
   Footer Component
   Dark footer shown on every page: copyright notice and a link to the
   Trusted Trader listing where the verified review count can be seen.
 */
-const Footer = () => {
+const Footer = (): ReactElement => {
   const currentYear = new Date().getFullYear();
 
   return (

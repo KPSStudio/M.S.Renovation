@@ -1,24 +1,18 @@
 /*
   Services Styles
   3-column responsive grid of service cards (1 column on mobile).
-  Cards lift and gain a stone-colored border/shadow on hover, with a
+  Cards lift and gain a stone-dark border/shadow on hover, with a
   subtle diagonal sheen sweeping across on hover via ::before.
 */
 
 .servicesSection {
-  padding: 6rem 2rem;
+  padding: var(--spacing-2xl) var(--spacing-lg);
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .sectionHeading {
-  font-family: system-ui, serif;
-  font-size: 3rem;
-  color: var(--dark);
-  margin-bottom: 4rem;
   text-align: center;
-  font-weight: 600;
-  letter-spacing: -0.8px;
 }
 
 .servicesGrid {
@@ -30,10 +24,10 @@
 .serviceCard {
   background: white;
   padding: 2.5rem;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   border: 2px solid var(--border-light);
   text-align: center;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-smooth);
   position: relative;
   overflow: hidden;
 }
@@ -46,14 +40,14 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(212, 165, 116, 0.1), transparent);
+  background: linear-gradient(90deg, transparent, rgba(201, 149, 72, 0.12), transparent);
   transition: left 0.6s ease;
   pointer-events: none;
 }
 
 .serviceCard:hover {
-  border-color: var(--stone);
-  box-shadow: 0 12px 32px rgba(139, 115, 85, 0.15);
+  border-color: var(--stone-dark);
+  box-shadow: 0 12px 32px rgba(107, 83, 68, 0.15);
   transform: translateY(-8px);
 }
 
@@ -62,27 +56,21 @@
 }
 
 .serviceCardTitle {
-  color: var(--stone);
+  color: var(--stone-dark);
+  font-size: var(--font-size-h3);
   margin-bottom: 1.2rem;
-  font-size: 1.3rem;
-  font-weight: 600;
-  font-family: system-ui, serif;
 }
 
 .serviceCardDescription {
   color: var(--text-gray);
   font-size: 0.95rem;
   line-height: 1.8;
+  margin-bottom: 0;
 }
 
 @media (max-width: 768px) {
   .servicesSection {
     padding: 3rem 1.5rem;
-  }
-
-  .sectionHeading {
-    font-size: 2rem;
-    margin-bottom: 2.5rem;
   }
 
   .servicesGrid {

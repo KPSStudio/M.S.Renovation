@@ -1,10 +1,12 @@
 'use client';
 
-import useScrollAnimation from '../hooks/useScrollAnimation';
-import styles from '../styles/Services.module.css';
+import type { ReactElement } from 'react';
+import useScrollAnimation from '@/utils/useScrollAnimation';
+import type { Service } from '@/types';
+import styles from './Services.module.css';
 
 /* The six services offered, in display order */
-const SERVICES_LIST = [
+const SERVICES_LIST: Service[] = [
   {
     title: 'Painting and Decorating',
     description:
@@ -34,26 +36,29 @@ const SERVICES_LIST = [
   },
 ];
 
+interface ServiceCardProps {
+  service: Service;
+}
+
 /*
   ServiceCard
   A single card in the services grid. Uses useScrollAnimation so each
-  card fades in independently as it scrolls into view, with a stagger
-  delay based on its position (1st/2nd/3rd column pattern repeats).
-  props: { title: string, description: string, delayIndex: number }
+  card fades in independently as it scrolls into view. Pairs with the
+  global "scroll-animate"/"scroll-animate-stagger" utility classes from
+  globals.css, which stagger the animation-delay by nth-child position.
 */
-const ServiceCard = ({ title, description, delayIndex }) => {
+const ServiceCard = ({ service }: ServiceCardProps): ReactElement => {
   const [cardRef, isVisible] = useScrollAnimation();
-  const delayClassName = `scrollAnimateDelay${(delayIndex % 3) + 1}`;
 
   return (
     <div
       ref={cardRef}
-      className={`${styles.serviceCard} scrollAnimate ${delayClassName} ${
+      className={`${styles.serviceCard} scroll-animate scroll-animate-stagger ${
         isVisible ? 'visible' : ''
       }`}
     >
-      <h3 className={styles.serviceCardTitle}>{title}</h3>
-      <p className={styles.serviceCardDescription}>{description}</p>
+      <h3 className={styles.serviceCardTitle}>{service.title}</h3>
+      <p className={styles.serviceCardDescription}>{service.description}</p>
     </div>
   );
 };
@@ -64,18 +69,13 @@ const ServiceCard = ({ title, description, delayIndex }) => {
   Each card shows a service title and description, and animates in
   on scroll with staggered timing.
 */
-const Services = () => {
+const Services = (): ReactElement => {
   return (
     <section id="services" className={styles.servicesSection}>
       <h2 className={styles.sectionHeading}>What We Do</h2>
       <div className={styles.servicesGrid}>
-        {SERVICES_LIST.map((service, index) => (
-          <ServiceCard
-            key={service.title}
-            title={service.title}
-            description={service.description}
-            delayIndex={index}
-          />
+        {SERVICES_LIST.map((service) => (
+          <ServiceCard key={service.title} service={service} />
         ))}
       </div>
     </section>

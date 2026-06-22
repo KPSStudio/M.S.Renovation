@@ -1,17 +1,26 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type ChangeEvent, type FormEvent, type ReactElement } from 'react';
 import { FaWhatsapp, FaFacebook } from 'react-icons/fa';
-import styles from '../styles/Contact.module.css';
+import type { BudgetOption, ContactFormValues } from '@/types';
+import styles from './Contact.module.css';
 
 const WHATSAPP_PHONE_NUMBER = '447572916190';
 
-const BUDGET_OPTIONS = [
+const BUDGET_OPTIONS: BudgetOption[] = [
   { value: '1-1000', label: '£1 - £1,000' },
   { value: '1001-5000', label: '£1,001 - £5,000' },
   { value: '5001-25000', label: '£5,001 - £25,000' },
   { value: '25000+', label: '£25,000+' },
 ];
+
+const INITIAL_FORM_VALUES: ContactFormValues = {
+  name: '',
+  email: '',
+  phone: '',
+  budget: '',
+  message: '',
+};
 
 /*
   Contact Component
@@ -19,27 +28,23 @@ const BUDGET_OPTIONS = [
   Submitting the form builds a pre-filled WhatsApp message from the
   entered details and redirects the visitor to WhatsApp to send it,
   since there is no backend to receive form submissions.
-  props: none
 */
-const Contact = () => {
-  const [formValues, setFormValues] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    budget: '',
-    message: '',
-  });
+const Contact = (): ReactElement => {
+  const [formValues, setFormValues] = useState<ContactFormValues>(INITIAL_FORM_VALUES);
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ): void => {
     const { name, value } = event.target;
     setFormValues((previousValues) => ({ ...previousValues, [name]: value }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
     const budgetLabel =
-      BUDGET_OPTIONS.find((option) => option.value === formValues.budget)?.label ?? formValues.budget;
+      BUDGET_OPTIONS.find((option) => option.value === formValues.budget)?.label ??
+      formValues.budget;
 
     const whatsappMessage =
       `Hi M.S. Renovation, I'd like a quote:\n\n` +

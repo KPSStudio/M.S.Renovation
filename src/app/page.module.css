@@ -1,23 +1,18 @@
 /*
-  Home Page Styles
-  Homepage-only sections that don't belong to a single reusable
-  component: the "See Our Work" gallery call-to-action banner that
-  sits between the Services grid and the Certificate section.
+  Homepage-only Styles
+  The "See Our Work" gallery call-to-action banner that sits between
+  the Services grid and the Certificate section. Doesn't belong to a
+  single reusable component, so it's colocated with page.tsx.
 */
 
 .galleryCallToActionSection {
   background: linear-gradient(135deg, white 0%, var(--light) 100%);
-  padding: 6rem 2rem;
+  padding: var(--spacing-2xl) var(--spacing-lg);
   text-align: center;
 }
 
 .galleryCallToActionHeading {
-  font-family: system-ui, serif;
-  font-size: 3rem;
-  color: var(--dark);
-  margin-bottom: 2rem;
-  font-weight: 600;
-  letter-spacing: -0.8px;
+  text-align: center;
 }
 
 .galleryCallToActionText {
@@ -38,27 +33,21 @@
   font-size: 0.95rem;
   border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
-  border-radius: 4px;
-  font-family: system-ui, serif;
-  background: var(--stone);
+  transition: all var(--transition-normal);
+  border-radius: var(--radius-md);
+  background: var(--stone-dark);
   color: white;
   min-height: 48px;
 }
 
 .galleryCallToActionButton:hover {
-  background: var(--stone-dark);
+  background: var(--stone-darker);
   transform: translateY(-4px);
-  box-shadow: 0 10px 24px rgba(139, 115, 85, 0.3);
+  box-shadow: 0 10px 24px rgba(107, 83, 68, 0.3);
 }
 
 @media (max-width: 768px) {
   .galleryCallToActionSection {
     padding: 3rem 1.5rem;
-  }
-
-  .galleryCallToActionHeading {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
   }
 }

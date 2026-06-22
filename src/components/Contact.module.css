@@ -1,40 +1,33 @@
 /*
   Contact Styles
-  Stone-to-dark-stone gradient panel containing the quote request
-  form plus WhatsApp/Facebook icon buttons and direct contact details.
+  Stone-dark gradient panel containing the quote request form plus
+  WhatsApp/Facebook icon buttons and direct contact details.
 */
 
 .contactSection {
   background: var(--light);
   text-align: center;
-  padding: 6rem 2rem;
+  padding: var(--spacing-2xl) var(--spacing-lg);
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .sectionHeading {
-  font-family: system-ui, serif;
-  font-size: 3rem;
-  color: var(--dark);
-  margin-bottom: 4rem;
   text-align: center;
-  font-weight: 600;
-  letter-spacing: -0.8px;
 }
 
 .contactContent {
-  background: linear-gradient(135deg, var(--stone) 0%, var(--stone-dark) 100%);
+  background: linear-gradient(135deg, var(--stone-dark) 0%, var(--stone-darker) 100%);
   color: white;
   padding: 3.5rem 2rem;
-  border-radius: 4px;
-  box-shadow: 0 12px 32px rgba(139, 115, 85, 0.2);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 32px rgba(107, 83, 68, 0.2);
 }
 
 .contactContentTitle {
-  font-family: system-ui, serif;
+  color: white;
   font-size: 1.8rem;
   margin-bottom: 1rem;
-  font-weight: 600;
 }
 
 .contactContentIntro {
@@ -69,12 +62,11 @@
   width: 100%;
   padding: 0.8rem;
   border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   background: rgba(255, 255, 255, 0.12);
   color: white;
   font-size: 0.95rem;
-  font-family: system-ui, serif;
-  transition: all 0.3s ease;
+  transition: all var(--transition-normal);
   min-height: 48px;
 }
 
@@ -101,25 +93,17 @@
   color: var(--dark);
 }
 
-.contactButtons {
-  display: flex;
-  gap: 1.2rem;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 2rem;
-}
-
 /* Full-width text submit button inside the form, separate from the circular icon buttons below it */
 .formSubmitButton {
   display: inline-block;
   width: 100%;
   background: white;
-  color: var(--stone);
+  color: var(--stone-dark);
   padding: 0.9rem 1.8rem;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   text-decoration: none;
   font-weight: 700;
-  transition: all 0.3s ease;
+  transition: all var(--transition-normal);
   border: none;
   cursor: pointer;
   font-size: 0.95rem;
@@ -138,12 +122,12 @@
   align-items: center;
   justify-content: center;
   background: white;
-  color: var(--stone);
+  color: var(--stone-dark);
   width: 56px;
   height: 56px;
   border-radius: 50%;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all var(--transition-normal);
   border: none;
   cursor: pointer;
   font-size: 1.5rem;
@@ -154,6 +138,14 @@
   color: var(--gold);
   transform: translateY(-3px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.contactButtons {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2rem;
 }
 
 .contactInfo {
@@ -181,11 +173,6 @@
 @media (max-width: 768px) {
   .contactSection {
     padding: 3rem 1.5rem;
-  }
-
-  .sectionHeading {
-    font-size: 2rem;
-    margin-bottom: 2.5rem;
   }
 
   .contactButtons {
