@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import type { ReactElement } from 'react';
 import Navigation from '@/components/layout/Navigation';
 import Hero from '@/components/Hero';
@@ -7,6 +8,21 @@ import Certificate from '@/components/Certificate';
 import Reviews from '@/components/Reviews';
 import Contact from '@/components/Contact';
 import homeStyles from './page.module.css';
+
+export const metadata: Metadata = {
+  title: 'Professional Painter, Decorator and Home Improvements in Aberdeen',
+  description:
+    'Expert painter, decorator and home improvement services in Aberdeen, Scotland. Trusted Trader certified, 5-star rated. Painting, decorating, bathroom renovations, kitchen fitting, and carpentry. Free quotes - call 07572 916190 or WhatsApp.',
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: 'M.S. Renovation - Professional Home Improvements in Aberdeen',
+    description:
+      'Quality painting, decorating, and home renovation services. 5-star Trusted Trader. Free consultations available.',
+    url: '/',
+  },
+};
 
 /*
   Homepage

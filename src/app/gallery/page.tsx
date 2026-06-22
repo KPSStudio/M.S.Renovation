@@ -1,8 +1,23 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import type { ReactElement } from 'react';
 import GalleryNavigation from '@/components/layout/GalleryNavigation';
 import GalleryGrid from '@/components/GalleryGrid';
 import styles from './page.module.css';
+
+export const metadata: Metadata = {
+  title: 'Our Work Gallery | Before and After Photos',
+  description:
+    'See our painting, decorating, and home improvement projects. Before and after photos of bathroom renovations, kitchen fitting, and painting projects in Aberdeen.',
+  alternates: {
+    canonical: '/gallery',
+  },
+  openGraph: {
+    title: 'M.S. Renovation Gallery - Before and After Home Improvement Photos',
+    description: 'Browse our recent renovation and improvement projects with before and after photos.',
+    url: '/gallery',
+  },
+};
 
 /*
   Gallery Page

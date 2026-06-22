@@ -22,13 +22,13 @@
 .certificateImageWrapper {
   border-radius: var(--radius-md);
   overflow: hidden;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-lg);
   transition: all var(--transition-smooth);
 }
 
 .certificateImageWrapper:hover {
   transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-stone-lg);
 }
 
 .certificateImage {
@@ -38,7 +38,7 @@
 }
 
 .certificateCaption {
-  margin-top: 2rem;
+  margin-top: var(--spacing-lg);
   color: var(--text-gray);
   font-size: 0.95rem;
   font-weight: 400;
@@ -49,6 +49,30 @@
 .certificateCaption strong {
   color: var(--stone-dark);
   font-weight: 600;
+}
+
+/* Row of trust signal pills shown below the caption, repeating facts
+   already stated in the caption/Reviews section in a quickly scannable form */
+.trustBadgesRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-lg);
+}
+
+.trustBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: white;
+  color: var(--stone-dark);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  padding: 0.6rem var(--spacing-md);
+  border-radius: 50px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
 }
 
 @media (max-width: 768px) {

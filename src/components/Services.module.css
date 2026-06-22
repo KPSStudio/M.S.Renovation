@@ -18,18 +18,19 @@
 .servicesGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2.5rem;
+  gap: var(--spacing-xl);
 }
 
 .serviceCard {
   background: white;
-  padding: 2.5rem;
+  padding: var(--spacing-xl);
   border-radius: var(--radius-md);
   border: 2px solid var(--border-light);
   text-align: center;
   transition: all var(--transition-smooth);
   position: relative;
   overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
 /* Diagonal light sweep that animates across the card on hover */
@@ -47,7 +48,7 @@
 
 .serviceCard:hover {
   border-color: var(--stone-dark);
-  box-shadow: 0 12px 32px rgba(107, 83, 68, 0.15);
+  box-shadow: var(--shadow-stone-lg);
   transform: translateY(-8px);
 }
 
@@ -58,7 +59,7 @@
 .serviceCardTitle {
   color: var(--stone-dark);
   font-size: var(--font-size-h3);
-  margin-bottom: 1.2rem;
+  margin-bottom: var(--spacing-sm);
 }
 
 .serviceCardDescription {
