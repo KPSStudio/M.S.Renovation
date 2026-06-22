@@ -1,0 +1,174 @@
+/*
+  Reviews Styles
+  Auto-rotating carousel: a single review card slides into view at a
+  time, with manual prev/next arrow buttons and clickable dot indicators.
+*/
+
+.reviewsSection {
+  background: white;
+  padding: 6rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sectionHeading {
+  font-family: system-ui, serif;
+  font-size: 3rem;
+  color: var(--dark);
+  margin-bottom: 4rem;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: -0.8px;
+}
+
+.carouselContainer {
+  background: var(--light);
+  border-radius: 4px;
+  padding: 3rem;
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+}
+
+/* The track shifts left by 100% per slide; transform is set inline based on currentSlide state */
+.carouselTrack {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reviewCard {
+  flex: 0 0 100%;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 320px;
+}
+
+.reviewStars {
+  color: var(--gold);
+  font-size: 1rem;
+  letter-spacing: 2px;
+  margin-bottom: 1.2rem;
+}
+
+.reviewText {
+  color: #555555;
+  font-size: 1.08rem;
+  line-height: 1.9;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+}
+
+.reviewAuthor {
+  color: var(--stone);
+  font-weight: 700;
+  font-size: 0.95rem;
+  font-family: system-ui, serif;
+}
+
+.reviewBudgetValue {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 0.4rem;
+  font-weight: 600;
+}
+
+.carouselControls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+  margin-top: 3rem;
+}
+
+.carouselDotsWrapper {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.carouselDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d4c4b0;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.carouselDotActive {
+  background: var(--stone);
+  width: 28px;
+  border-radius: 5px;
+}
+
+.carouselArrowButton {
+  background: var(--stone);
+  color: white;
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.carouselArrowButton:hover {
+  background: var(--stone-dark);
+  transform: scale(1.12);
+  box-shadow: 0 6px 16px rgba(139, 115, 85, 0.25);
+}
+
+.carouselArrowButton:active {
+  transform: scale(0.98);
+}
+
+.slideCounter {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 1.5rem;
+  font-weight: 600;
+}
+
+.trustedTraderLink {
+  display: block;
+  text-align: center;
+  margin-top: 2rem;
+  color: var(--stone);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.trustedTraderLink:hover {
+  color: var(--gold);
+}
+
+@media (max-width: 768px) {
+  .reviewsSection {
+    padding: 3rem 1.5rem;
+  }
+
+  .sectionHeading {
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .carouselContainer {
+    padding: 1.5rem;
+  }
+
+  .carouselControls {
+    gap: 1.5rem;
+  }
+}

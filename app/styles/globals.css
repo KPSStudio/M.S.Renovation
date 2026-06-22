@@ -1,0 +1,86 @@
+/*
+  Global Styles
+  Applies to the entire site: CSS reset, color palette, base typography,
+  and the shared scroll-fade-in animation classes used by every section.
+*/
+
+/* CSS reset: remove default browser spacing and use border-box sizing everywhere */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Smooth scrolling for in-page anchor links (e.g. nav links to #services) */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Color palette and design tokens, available to every CSS module via var() */
+:root {
+  --stone: #8b7355;
+  --stone-dark: #6f5d49;
+  --gold: #d4a574;
+  --dark: #3e3e3e;
+  --muted: #c4b5a0;
+  --light: #f8f3ed;
+  --border-light: #e8e3dc;
+  --text-gray: #888888;
+}
+
+body {
+  font-family: system-ui, serif;
+  color: var(--dark);
+  background: var(--light);
+  line-height: 1.8;
+}
+
+/*
+  Scroll Animation Classes
+  Elements start hidden and translated down. When the Intersection Observer
+  (see useScrollAnimation in each component) detects the element entering
+  the viewport, it adds the "visible" class which triggers the fade/slide in.
+*/
+.scrollAnimate {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.scrollAnimate.visible {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Stagger delays so groups of cards animate in one after another */
+.scrollAnimateDelay1 {
+  animation-delay: 0.1s;
+}
+
+.scrollAnimateDelay2 {
+  animation-delay: 0.2s;
+}
+
+.scrollAnimateDelay3 {
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

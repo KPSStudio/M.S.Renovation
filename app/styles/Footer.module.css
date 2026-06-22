@@ -1,0 +1,27 @@
+/*
+  Footer Styles
+  Simple centered dark footer with copyright text and a Trusted
+  Trader verification link, shown at the bottom of every page.
+*/
+
+.footer {
+  background: var(--dark);
+  color: white;
+  text-align: center;
+  padding: 2.5rem 2rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.footerLine {
+  margin: 0.4rem 0;
+}
+
+.footerLink {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.footerLink:hover {
+  text-decoration: underline;
+}

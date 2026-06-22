@@ -1,0 +1,67 @@
+/*
+  Certificate Styles
+  Centered certificate image with a hover lift, plus a short
+  paragraph explaining the Trusted Trader membership and validity date.
+*/
+
+.certificateSection {
+  background: var(--light);
+  padding: 6rem 2rem;
+  text-align: center;
+}
+
+.sectionHeading {
+  font-family: system-ui, serif;
+  font-size: 3rem;
+  color: var(--dark);
+  margin-bottom: 3rem;
+  font-weight: 600;
+  letter-spacing: -0.8px;
+}
+
+.certificateContainer {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.certificateImageWrapper {
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  transition: all 0.4s ease;
+}
+
+.certificateImageWrapper:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+}
+
+.certificateImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.certificateCaption {
+  margin-top: 2rem;
+  color: var(--text-gray);
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.8;
+}
+
+.certificateCaption strong {
+  color: var(--stone);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .certificateSection {
+    padding: 3rem 1.5rem;
+  }
+
+  .sectionHeading {
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+  }
+}

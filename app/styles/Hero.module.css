@@ -1,0 +1,142 @@
+/*
+  Hero Styles
+  Full-width introductory section with headline, subheading, a
+  star-rating badge, and two call-to-action buttons. Each element
+  fades in on page load with a staggered delay.
+*/
+
+.heroSection {
+  padding: 7rem 2rem 5rem;
+  text-align: center;
+  background: linear-gradient(135deg, #ffffff 0%, var(--light) 100%);
+}
+
+.heroContent {
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.heroHeadline {
+  font-family: system-ui, serif;
+  font-size: 3.8rem;
+  color: var(--dark);
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -1.2px;
+  line-height: 1.15;
+  animation: fadeInUp 0.7s ease-out;
+}
+
+.heroSubheading {
+  font-size: 1.2rem;
+  color: var(--text-gray);
+  margin-bottom: 2.5rem;
+  font-weight: 400;
+  animation: fadeInUp 0.7s ease-out 0.15s backwards;
+}
+
+/* Pill-shaped badge showing the overall star rating */
+.ratingBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: white;
+  padding: 0.9rem 2rem;
+  border-radius: 50px;
+  margin-bottom: 2.5rem;
+  border: 2px solid var(--stone);
+  animation: scaleIn 0.6s ease-out 0.3s backwards;
+  box-shadow: 0 4px 16px rgba(139, 115, 85, 0.12);
+}
+
+.ratingStars {
+  color: var(--gold);
+  font-size: 1rem;
+  letter-spacing: 2px;
+}
+
+.ratingText {
+  font-weight: 700;
+  color: var(--stone);
+  font-size: 0.95rem;
+}
+
+.callToActionButtons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 0.7s ease-out 0.4s backwards;
+}
+
+.callToActionButton {
+  padding: 1rem 2.2rem;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+  font-family: system-ui, serif;
+  display: inline-block;
+  min-height: 48px;
+}
+
+.primaryButton {
+  background: var(--stone);
+  color: white;
+}
+
+.primaryButton:hover {
+  background: var(--stone-dark);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(139, 115, 85, 0.3);
+}
+
+.secondaryButton {
+  background: transparent;
+  color: var(--stone);
+  border: 2px solid var(--stone);
+}
+
+.secondaryButton:hover {
+  background: var(--light);
+  transform: translateY(-4px);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .heroSection {
+    padding: 3rem 1.5rem;
+  }
+
+  .heroHeadline {
+    font-size: 2.2rem;
+  }
+
+  .heroSubheading {
+    font-size: 1rem;
+  }
+}

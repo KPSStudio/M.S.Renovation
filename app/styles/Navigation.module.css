@@ -1,0 +1,114 @@
+/*
+  Navigation Styles
+  Sticky header with logo on the left and nav links on the right.
+  Each link gets an animated underline that fills in on hover or
+  when its section is active.
+*/
+
+.header {
+  background: white;
+  padding: 1.5rem 2rem;
+  border-bottom: 2px solid var(--border-light);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.navigationBar {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoLink {
+  font-family: system-ui, serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--stone);
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+
+.navigationLinksList {
+  display: flex;
+  gap: 3rem;
+  list-style: none;
+}
+
+/* Each nav link uses position: relative so the ::after underline can be absolutely positioned beneath it */
+.navigationLink {
+  text-decoration: none;
+  color: var(--text-gray);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  padding-bottom: 0.5rem;
+  font-family: system-ui, serif;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.navigationLink::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: var(--stone);
+  transition: width 0.4s ease;
+}
+
+.navigationLink:hover::after,
+.navigationLinkActive::after {
+  width: 100%;
+}
+
+.navigationLink:hover,
+.navigationLinkActive {
+  color: var(--stone);
+}
+
+/* Mobile menu toggle button, hidden on desktop */
+.mobileMenuButton {
+  display: none;
+  background: none;
+  border: 2px solid var(--stone);
+  border-radius: 4px;
+  color: var(--stone);
+  font-size: 1.4rem;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .navigationLinksList {
+    display: none;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 2rem;
+    border-bottom: 2px solid var(--border-light);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  .navigationLinksList.mobileMenuOpen {
+    display: flex;
+  }
+
+  .mobileMenuButton {
+    display: flex;
+  }
+}
