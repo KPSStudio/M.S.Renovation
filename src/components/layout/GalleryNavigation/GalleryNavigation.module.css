@@ -1,0 +1,69 @@
+/*
+  Gallery Navigation Styles
+  Simplified header for the gallery page: just the logo and a
+  "Back to Main Page" button, no link menu, no scroll-darken effect.
+*/
+
+.galleryNavigation {
+  background: white;
+  border-bottom: 1px solid var(--border-light);
+  padding: var(--spacing-lg) var(--spacing-lg);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.navigationContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logoLink {
+  font-family: system-ui, serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--stone-dark);
+  text-decoration: none;
+  letter-spacing: -0.5px;
+  transition: color var(--transition-normal);
+}
+
+.logoLink:hover {
+  color: var(--stone);
+}
+
+.backButton {
+  color: var(--stone-dark);
+  text-decoration: none;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 2px solid var(--stone-dark);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
+  cursor: pointer;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.backButton:hover {
+  background: var(--stone-dark);
+  color: white;
+  transform: translateX(-4px);
+}
+
+@media (max-width: 768px) {
+  .navigationContainer {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .backButton {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import type { ReactElement, ReactNode } from 'react';
-import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import './globals.css';
 
@@ -12,15 +11,16 @@ export const metadata: Metadata = {
 
 /*
   Root Layout
-  Wraps every page with the shared Navigation header and Footer, and
-  loads the global stylesheet (resets, color palette, fonts, and the
-  shared scroll-animation classes used across components).
+  Wraps every page with the shared Footer and loads the global
+  stylesheet (resets, color palette, fonts, and the shared
+  scroll-animation classes used across components). The header is
+  page-specific rather than shared here: the homepage uses the full
+  Navigation, the gallery page uses the simplified GalleryNavigation.
 */
 export default function RootLayout({ children }: { children: ReactNode }): ReactElement {
   return (
     <html lang="en">
       <body>
-        <Navigation />
         {children}
         <Footer />
       </body>
