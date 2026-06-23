@@ -76,6 +76,9 @@ const Reviews = (): ReactElement => {
   return (
     <section className={styles.reviewsSection} id="reviews">
       <h2 className={styles.sectionHeading}>What Clients Say</h2>
+      <p className={styles.sectionSubtext}>
+        Real feedback from real projects. 5.0 star rated on Trusted Trader from 16 reviews.
+      </p>
 
       <div className={styles.carouselContainer}>
         {/* Track shifts left by 100% per slide to reveal the active review */}

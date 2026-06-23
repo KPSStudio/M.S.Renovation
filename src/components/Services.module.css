@@ -1,8 +1,8 @@
 /*
   Services Styles
-  3-column responsive grid of service cards (1 column on mobile).
-  Cards lift and gain a stone-dark border/shadow on hover, with a
-  subtle diagonal sheen sweeping across on hover via ::before.
+  Responsive card row of service cards (1 column on mobile). Cards
+  lift and gain a stone-dark border/shadow on hover, with a subtle
+  diagonal sheen sweeping across on hover via ::before.
 */
 
 .servicesSection {
@@ -15,15 +15,24 @@
   text-align: center;
 }
 
+/* Flexbox rather than CSS Grid: with an odd card count (5), an
+   incomplete last row needs to center as its own pair, not just sit
+   left-aligned within an otherwise-centered grid track. CSS Grid's
+   auto-fit/minmax doesn't center incomplete rows individually — only
+   flex-wrap + justify-content does, since each wrapped row gets its
+   own leftover space distributed by justify-content. flex: 0 1 <basis>
+   (no grow) keeps cards close to their intended width instead of
+   stretching to fill a half-empty row. */
 .servicesGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: var(--spacing-xl);
 }
 
 .serviceCard {
   background: white;
-  padding: var(--spacing-xl);
+  padding: var(--spacing-lg);
   border-radius: var(--radius-md);
   border: 2px solid var(--border-light);
   text-align: center;
@@ -31,6 +40,8 @@
   position: relative;
   overflow: hidden;
   box-shadow: var(--shadow-sm);
+  flex: 0 1 320px;
+  max-width: 340px;
 }
 
 /* Diagonal light sweep that animates across the card on hover */
@@ -59,14 +70,38 @@
 .serviceCardTitle {
   color: var(--stone-dark);
   font-size: var(--font-size-h3);
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
 }
 
 .serviceCardDescription {
   color: var(--text-gray);
   font-size: 0.95rem;
-  line-height: 1.8;
+  line-height: 1.6;
   margin-bottom: 0;
+}
+
+/* Short capability bullets shown under the description, left-aligned
+   against the otherwise centered card for easy scanning */
+.serviceCardDetailsList {
+  list-style: none;
+  margin-top: var(--spacing-sm);
+  padding: 0;
+  text-align: left;
+}
+
+.serviceCardDetailsListItem {
+  position: relative;
+  padding: 0.3rem 0 0.3rem 1.5rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.serviceCardDetailsListItem::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--stone-dark);
+  font-weight: 700;
 }
 
 @media (max-width: 768px) {
@@ -74,7 +109,8 @@
     padding: 3rem 1.5rem;
   }
 
-  .servicesGrid {
-    grid-template-columns: 1fr;
+  .serviceCard {
+    flex: 1 1 100%;
+    max-width: 100%;
   }
 }

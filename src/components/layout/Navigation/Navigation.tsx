@@ -9,13 +9,18 @@ import styles from './Navigation.module.css';
   Navigation Component
   Full header shown only on the homepage (the gallery page uses the
   simpler GalleryNavigation instead). Shows the business logo on the
-  left and four anchor links on the right: Services, Our Work,
-  Reviews, Contact — all of which scroll to a section on this page.
+  left and anchor links on the right for every major homepage section
+  — Services, Why Choose Us, Our Work, Reviews, Areas, FAQ, Contact —
+  all of which scroll to a section on this page.
 
   Two independent scroll-driven behaviors:
-  - Darken effect: once window.scrollY passes 50px, the header swaps
-    from a flat white background to a gradient with a heavier
-    stone-dark border and a shadow (isScrolled state).
+  - Darken-and-shrink effect: once window.scrollY passes 50px, the
+    header swaps from a flat white background to a gradient with a
+    heavier stone-dark border and a shadow, and its padding and
+    logo/link font-size shrink slightly (isScrolled state). All of
+    this is driven by CSS transitions on the .headerScrolled class in
+    Navigation.module.css, not inline styles, so it stays GPU-cheap
+    and doesn't fight the header's position: sticky layout.
   - Active-section tracking: whichever section is currently scrolled
     into view gets the active underline, tracked by checking each
     section's offsetTop (activeSection state).
@@ -24,8 +29,11 @@ import styles from './Navigation.module.css';
 */
 const NAVIGATION_LINKS: NavLink[] = [
   { label: 'Services', href: '#services', id: 'services' },
+  { label: 'Why Choose Us', href: '#why-choose-us', id: 'why-choose-us' },
   { label: 'Our Work', href: '#our-work', id: 'our-work' },
   { label: 'Reviews', href: '#reviews', id: 'reviews' },
+  { label: 'Areas', href: '#service-areas', id: 'service-areas' },
+  { label: 'FAQ', href: '#faq', id: 'faq' },
   { label: 'Contact', href: '#contact', id: 'contact' },
 ];
 

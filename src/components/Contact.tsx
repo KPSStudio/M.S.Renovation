@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, type ChangeEvent, type FormEvent, type ReactElement } from 'react';
-import { FaWhatsapp, FaFacebook } from 'react-icons/fa';
+import { FaWhatsapp, FaFacebook, FaInstagram } from 'react-icons/fa';
 import type { BudgetOption, ContactFormValues } from '@/types';
 import styles from './Contact.module.css';
 
@@ -24,10 +24,13 @@ const INITIAL_FORM_VALUES: ContactFormValues = {
 
 /*
   Contact Component
-  Quote request form plus direct WhatsApp and Facebook icon buttons.
-  Submitting the form builds a pre-filled WhatsApp message from the
-  entered details and redirects the visitor to WhatsApp to send it,
-  since there is no backend to receive form submissions.
+  Two-column layout inside the stone-dark gradient card: a "Quick
+  Contact" column (WhatsApp/Facebook/Instagram icon buttons plus
+  phone/location/membership details) on the left, and the quote
+  request form on the
+  right. Submitting the form builds a pre-filled WhatsApp message from
+  the entered details and redirects the visitor to WhatsApp to send
+  it, since there is no backend to receive form submissions.
 */
 const Contact = (): ReactElement => {
   const [formValues, setFormValues] = useState<ContactFormValues>(INITIAL_FORM_VALUES);
@@ -72,130 +75,148 @@ const Contact = (): ReactElement => {
           timeline.
         </p>
 
-        <form className={styles.contactForm} onSubmit={handleSubmit}>
-          <div className={styles.formGroup}>
-            <label htmlFor="name" className={styles.formGroupLabel}>
-              Your Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="John Smith"
-              className={styles.formGroupInput}
-              value={formValues.name}
-              onChange={handleInputChange}
-              required
-            />
+        <div className={styles.contactColumns}>
+          {/* Left column: direct contact methods, kept short so it reads
+              at a glance before the visitor commits to filling out the form */}
+          <div className={styles.quickContact}>
+            <h4 className={styles.quickContactHeading}>Quick Contact</h4>
+
+            <div className={styles.contactButtons}>
+              <a
+                href={`https://api.whatsapp.com/send?phone=${WHATSAPP_PHONE_NUMBER}&text=${encodeURIComponent(
+                  "Hi M.S. Renovation, I'd like to discuss a project. Please call me back."
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.contactIconButton}
+                aria-label="Message us on WhatsApp"
+              >
+                <FaWhatsapp />
+              </a>
+              <a
+                href="https://www.facebook.com/m.s.renovationaberdeen"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.contactIconButton}
+                aria-label="Visit our Facebook page"
+              >
+                <FaFacebook />
+              </a>
+              <a
+                href="https://www.instagram.com/m.s_renovation/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.contactIconButton}
+                aria-label="Visit our Instagram page"
+              >
+                <FaInstagram />
+              </a>
+            </div>
+
+            <div className={styles.contactInfo}>
+              <p className={styles.contactInfoLine}>
+                <strong>Call us:</strong> <a href="tel:07572916190">07572 916190</a>
+              </p>
+              <p className={styles.contactInfoLine}>
+                <strong>Location:</strong> Aberdeen, Scotland
+              </p>
+              <p className={styles.contactInfoLine}>
+                <strong>Trusted Trader Member Since:</strong> 2024
+              </p>
+            </div>
           </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="email" className={styles.formGroupLabel}>
-              Email Address
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="john@example.com"
-              className={styles.formGroupInput}
-              value={formValues.email}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+          {/* Right column: the quote request form */}
+          <form className={styles.contactForm} onSubmit={handleSubmit}>
+            <div className={styles.formGroup}>
+              <label htmlFor="name" className={styles.formGroupLabel}>
+                Your Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="John Smith"
+                className={styles.formGroupInput}
+                value={formValues.name}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="phone" className={styles.formGroupLabel}>
-              Phone Number
-            </label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              placeholder="07700 123456"
-              className={styles.formGroupInput}
-              value={formValues.phone}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="email" className={styles.formGroupLabel}>
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="john@example.com"
+                className={styles.formGroupInput}
+                value={formValues.email}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="budget" className={styles.formGroupLabel}>
-              Budget Range
-            </label>
-            <select
-              id="budget"
-              name="budget"
-              className={styles.formGroupSelect}
-              value={formValues.budget}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="">Select a range</option>
-              {BUDGET_OPTIONS.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="phone" className={styles.formGroupLabel}>
+                Phone Number
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="07700 123456"
+                className={styles.formGroupInput}
+                value={formValues.phone}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="message" className={styles.formGroupLabel}>
-              Describe Your Project
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              placeholder="Tell us what work you need done..."
-              className={styles.formGroupTextarea}
-              value={formValues.message}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="budget" className={styles.formGroupLabel}>
+                Budget Range
+              </label>
+              <select
+                id="budget"
+                name="budget"
+                className={styles.formGroupSelect}
+                value={formValues.budget}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="">Select a range</option>
+                {BUDGET_OPTIONS.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          {/* Submitting redirects to WhatsApp with the message pre-filled */}
-          <button type="submit" className={styles.formSubmitButton}>
-            Send via WhatsApp
-          </button>
-        </form>
+            <div className={styles.formGroup}>
+              <label htmlFor="message" className={styles.formGroupLabel}>
+                Describe Your Project
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                placeholder="Tell us what work you need done..."
+                className={styles.formGroupTextarea}
+                value={formValues.message}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
 
-        <div className={styles.contactButtons}>
-          <a
-            href={`https://api.whatsapp.com/send?phone=${WHATSAPP_PHONE_NUMBER}&text=${encodeURIComponent(
-              "Hi M.S. Renovation, I'd like to discuss a project. Please call me back."
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.contactIconButton}
-            aria-label="Message us on WhatsApp"
-          >
-            <FaWhatsapp />
-          </a>
-          <a
-            href="https://www.facebook.com/m.s.renovationaberdeen"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.contactIconButton}
-            aria-label="Visit our Facebook page"
-          >
-            <FaFacebook />
-          </a>
-        </div>
-
-        <div className={styles.contactInfo}>
-          <p className={styles.contactInfoLine}>
-            <strong>Call us:</strong> <a href="tel:07572916190">07572 916190</a>
-          </p>
-          <p className={styles.contactInfoLine}>
-            <strong>Location:</strong> Aberdeen, Scotland
-          </p>
-          <p className={styles.contactInfoLine}>
-            <strong>Trusted Trader Member Since:</strong> 2024
-          </p>
+            {/* Submitting redirects to WhatsApp with the message pre-filled */}
+            <button type="submit" className={styles.formSubmitButton}>
+              Send via WhatsApp
+            </button>
+          </form>
         </div>
       </div>
     </section>

@@ -25,3 +25,7 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# Claude Code agent instructions — internal only, do not publish
+AGENTS.md
+read.me

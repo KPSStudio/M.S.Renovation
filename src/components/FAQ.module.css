@@ -1,0 +1,130 @@
+/*
+  FAQ Styles
+  Accordion list: each question is a full-width button that expands
+  to reveal its answer, with only one open at a time.
+*/
+
+.faqSection {
+  background: var(--light);
+  padding: var(--spacing-2xl) var(--spacing-lg);
+}
+
+.sectionHeading {
+  text-align: center;
+}
+
+.sectionSubtext {
+  text-align: center;
+  color: var(--text-gray);
+  max-width: 600px;
+  margin: 0 auto var(--spacing-xl);
+  font-weight: 400;
+}
+
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.faqItem {
+  background: white;
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+.faqItem:hover {
+  border-color: var(--stone-dark);
+  box-shadow: var(--shadow-sm);
+}
+
+.faqQuestionButton {
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--dark);
+  text-align: left;
+  font-family: system-ui, serif;
+  transition: color var(--transition-normal);
+}
+
+.faqQuestionButton:hover {
+  color: var(--stone-dark);
+}
+
+.faqIcon {
+  font-size: 1.4rem;
+  color: var(--stone-dark);
+  flex-shrink: 0;
+  line-height: 1;
+  display: inline-block;
+  transition: transform var(--transition-normal);
+}
+
+.faqIconOpen {
+  transform: rotate(45deg);
+}
+
+/* Animates open/closed with a grid-template-rows transition (0fr to 1fr)
+   instead of mounting/unmounting the answer, so the height change is
+   smooth regardless of how long each answer is. */
+.faqAnswerWrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  transition: grid-template-rows var(--transition-smooth);
+}
+
+.faqAnswerWrapperOpen {
+  grid-template-rows: 1fr;
+}
+
+.faqAnswer {
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 var(--spacing-lg);
+  border-top: 0 solid var(--border-light);
+  opacity: 0;
+  transition: opacity var(--transition-normal), padding var(--transition-smooth),
+    border-top-width var(--transition-smooth);
+}
+
+.faqAnswerWrapperOpen .faqAnswer {
+  padding: 0 var(--spacing-lg) var(--spacing-md);
+  border-top-width: 1px;
+  opacity: 1;
+}
+
+.faqAnswer p {
+  color: var(--text-gray);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin: var(--spacing-sm) 0 0;
+}
+
+@media (max-width: 768px) {
+  .faqSection {
+    padding: 3rem 1.5rem;
+  }
+
+  .faqQuestionButton {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.95rem;
+  }
+
+  .faqAnswer {
+    padding: 0 var(--spacing-md) var(--spacing-sm);
+  }
+}

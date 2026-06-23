@@ -1,0 +1,178 @@
+/*
+  BeforeAfterGallery Styles
+  Two independent auto-rotating photo carousels (Before, then After),
+  shown side by side on desktop so the section actually fills the
+  page's width instead of one narrow centered column floating in a
+  lot of empty space, and stacked on mobile. Styled consistently with
+  the Reviews carousel: a light container, stone-dark circular arrow
+  buttons, and pill/dot indicators, plus a hover lift on the
+  container itself matching the Certificate image's hover treatment.
+*/
+
+.beforeAfterGallerySection {
+  padding: var(--spacing-2xl) var(--spacing-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.sectionHeadingText {
+  text-align: center;
+}
+
+.sectionHeadingSubtext {
+  color: var(--text-gray);
+  max-width: 600px;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+/* Side-by-side on desktop, stacked on mobile (see media query below) */
+.carouselsRow {
+  display: flex;
+  gap: var(--spacing-xl);
+  align-items: flex-start;
+}
+
+.carouselColumn {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.groupHeading {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--stone-dark);
+  margin-top: 0;
+  margin-bottom: var(--spacing-lg);
+}
+
+.carouselContainer {
+  background: var(--light);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--transition-smooth), box-shadow var(--transition-smooth),
+    transform var(--transition-smooth);
+}
+
+.carouselContainer:hover {
+  border-color: var(--stone-dark);
+  box-shadow: var(--shadow-stone-lg);
+  transform: translateY(-4px);
+}
+
+/* The track shifts left by 100% per slide; transform is set inline based on currentSlide state */
+.carouselTrack {
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carouselSlide {
+  flex: 0 0 100%;
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carouselControls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+}
+
+.carouselDotsWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  max-width: 220px;
+}
+
+.carouselDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d4c4b0;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  padding: 0;
+}
+
+.carouselDotActive {
+  background: var(--stone-dark);
+  width: 22px;
+  border-radius: 4px;
+}
+
+.carouselArrowButton {
+  background: var(--stone-dark);
+  color: white;
+  border: none;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.carouselArrowButton:hover {
+  background: var(--stone-darker);
+  transform: scale(1.12);
+  box-shadow: var(--shadow-stone-sm);
+}
+
+.carouselArrowButton:active {
+  transform: scale(0.98);
+}
+
+.slideCounter {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: var(--spacing-sm);
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .carouselsRow {
+    flex-direction: column;
+    gap: var(--spacing-2xl);
+  }
+}
+
+@media (max-width: 768px) {
+  .beforeAfterGallerySection {
+    padding: 3rem 1.5rem;
+  }
+
+  .carouselContainer {
+    padding: var(--spacing-md);
+  }
+
+  .carouselControls {
+    gap: var(--spacing-md);
+  }
+}

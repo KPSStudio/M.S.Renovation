@@ -1,16 +1,38 @@
 /*
   Gallery Navigation Styles
   Simplified header for the gallery page: just the logo and a
-  "Back to Main Page" button, no link menu, no scroll-darken effect.
+  "Back to Main Page" button, no link menu. Starts smaller than the
+  homepage Navigation (this page has less to anchor at the top) and
+  shrinks further plus darkens once scrolled, matching the homepage
+  header's behavior so the gallery page feels like the same site.
 */
 
 .galleryNavigation {
   background: white;
   border-bottom: 1px solid var(--border-light);
-  padding: var(--spacing-lg) var(--spacing-lg);
+  padding: var(--spacing-sm) var(--spacing-lg);
   position: sticky;
   top: 0;
   z-index: 50;
+  transition: background var(--transition-smooth), border-color var(--transition-smooth),
+    box-shadow var(--transition-smooth), padding var(--transition-smooth);
+}
+
+.galleryNavigationScrolled {
+  background: linear-gradient(to bottom, white, var(--light));
+  border-bottom: 2px solid var(--stone-dark);
+  box-shadow: var(--shadow-stone-sm);
+  padding: 0.6rem var(--spacing-lg);
+}
+
+.galleryNavigationScrolled .logoLink {
+  font-size: 1.3rem;
+}
+
+.galleryNavigationScrolled .backButton {
+  padding: 0.5rem var(--spacing-md);
+  min-height: 40px;
+  font-size: 0.9rem;
 }
 
 .navigationContainer {
@@ -28,7 +50,7 @@
   color: var(--stone-dark);
   text-decoration: none;
   letter-spacing: -0.5px;
-  transition: color var(--transition-normal);
+  transition: color var(--transition-normal), font-size var(--transition-smooth);
 }
 
 .logoLink:hover {
@@ -43,7 +65,9 @@
   padding: var(--spacing-sm) var(--spacing-md);
   border: 2px solid var(--stone-dark);
   border-radius: var(--radius-md);
-  transition: all var(--transition-normal);
+  transition: background var(--transition-normal), color var(--transition-normal),
+    transform var(--transition-normal), padding var(--transition-smooth),
+    font-size var(--transition-smooth), min-height var(--transition-smooth);
   cursor: pointer;
   min-height: 48px;
   display: inline-flex;
