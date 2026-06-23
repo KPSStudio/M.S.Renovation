@@ -1,7 +1,7 @@
 /*
   Gallery Page-only Styles
   The page header banner and the closing call-to-action banner.
-  The project list itself lives in the GalleryGrid component.
+  The photo carousels themselves live in the BeforeAfterGallery component.
 */
 
 .pageHeader {

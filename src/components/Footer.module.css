@@ -25,3 +25,23 @@
 .footerLink:hover {
   text-decoration: underline;
 }
+
+/* Deliberately quieter than the rest of the footer: smaller, muted
+   text so it reads as a small credit rather than competing with the
+   business's own copyright/Trusted Trader lines above it. */
+.creditLine {
+  margin: var(--spacing-md) 0 0;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.creditLink {
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  transition: color var(--transition-normal);
+}
+
+.creditLink:hover {
+  color: var(--gold);
+  text-decoration: underline;
+}

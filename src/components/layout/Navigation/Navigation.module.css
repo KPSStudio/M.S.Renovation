@@ -4,7 +4,16 @@
   Each link gets an animated underline that fills in on hover or
   when its section is active. The header itself darkens with a
   gradient, a heavier border, and a shadow once the page scrolls
-  past 50px (see the isScrolled state in Navigation.tsx).
+  past 50px (see the isScrolled state in Navigation.tsx), and shrinks
+  slightly (padding and logo/link font-size) at the same time.
+
+  The shrink is done by transitioning padding/font-size rather than a
+  transform: scale(), since this header is position: sticky — a
+  transform doesn't change the box's reserved layout space, which
+  would leave a visible gap between the visually-shrunk header and
+  the content below it. Animating padding/font-size directly avoids
+  that and is still a smooth, GPU-friendly transition for an element
+  this size.
 */
 
 .header {
@@ -13,7 +22,7 @@
   top: 0;
   z-index: 100;
   transition: background var(--transition-smooth), border-color var(--transition-smooth),
-    box-shadow var(--transition-smooth);
+    box-shadow var(--transition-smooth), padding var(--transition-smooth);
 }
 
 /* Default state: at the top of the page */
@@ -23,11 +32,22 @@
   box-shadow: none;
 }
 
-/* Scrolled state: applied once window.scrollY > 50 */
+/* Scrolled state: applied once window.scrollY > 50. Shrinks the
+   header's vertical padding and the logo/link font-size slightly,
+   alongside the existing background/border/shadow change. */
 .headerScrolled {
   background: linear-gradient(to bottom, white, var(--light));
   border-bottom: 2px solid var(--stone-dark);
   box-shadow: var(--shadow-stone-sm);
+  padding: var(--spacing-sm) var(--spacing-lg);
+}
+
+.headerScrolled .logoLink {
+  font-size: 1.3rem;
+}
+
+.headerScrolled .navigationLink {
+  font-size: 0.88rem;
 }
 
 .navigationBar {
@@ -46,11 +66,12 @@
   color: var(--stone-dark);
   text-decoration: none;
   letter-spacing: -0.5px;
+  transition: font-size var(--transition-smooth);
 }
 
 .navigationLinksList {
   display: flex;
-  gap: 3rem;
+  gap: 1.75rem;
   list-style: none;
 }
 
@@ -60,7 +81,7 @@
   color: var(--text-gray);
   font-size: 0.95rem;
   font-weight: 600;
-  transition: all var(--transition-normal);
+  transition: color var(--transition-normal), font-size var(--transition-smooth);
   position: relative;
   padding-bottom: 0.5rem;
   font-family: system-ui, serif;
@@ -105,7 +126,7 @@
   cursor: pointer;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 980px) {
   .navigationLinksList {
     display: none;
     flex-direction: column;

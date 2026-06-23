@@ -1,0 +1,61 @@
+/*
+  ServiceAreas Styles
+  A centered heading and subtext, followed by a wrapped pill list of
+  covered towns/areas, styled consistently with WhyChooseUs.
+*/
+
+.serviceAreasSection {
+  padding: var(--spacing-2xl) var(--spacing-lg);
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.sectionHeading {
+  text-align: center;
+}
+
+.sectionSubtext {
+  color: var(--text-gray);
+  max-width: 600px;
+  margin: 0 auto var(--spacing-xl);
+  font-weight: 400;
+}
+
+.areasList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  list-style: none;
+  margin: 0 0 var(--spacing-xl);
+  padding: 0;
+}
+
+.areaPill {
+  background: white;
+  border: 2px solid var(--border-light);
+  border-radius: 999px;
+  padding: var(--spacing-xs) var(--spacing-md);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--stone-dark);
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.areaPill:hover {
+  border-color: var(--stone-dark);
+  box-shadow: var(--shadow-sm);
+}
+
+.sectionFootnote {
+  color: var(--text-gray);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .serviceAreasSection {
+    padding: 3rem 1.5rem;
+  }
+}

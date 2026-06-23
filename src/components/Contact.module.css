@@ -34,15 +34,36 @@
   margin-bottom: var(--spacing-xl);
   font-weight: 400;
   font-size: 1.05rem;
+  text-align: center;
+}
+
+/* Two-column layout: Quick Contact on the left, the form on the right.
+   Stacks to a single column on mobile (form first, since most visitors
+   arriving on mobile are ready to fill it in directly). */
+.contactColumns {
+  display: grid;
+  grid-template-columns: minmax(220px, 320px) 1fr;
+  gap: var(--spacing-2xl);
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.quickContact {
+  display: flex;
+  flex-direction: column;
+}
+
+.quickContactHeading {
+  color: white;
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-md);
 }
 
 .contactForm {
   display: grid;
   gap: var(--spacing-md);
-  margin-bottom: var(--spacing-lg);
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
+  align-content: start;
 }
 
 .formGroup {
@@ -143,13 +164,11 @@
 .contactButtons {
   display: flex;
   gap: var(--spacing-sm);
-  justify-content: center;
   flex-wrap: wrap;
-  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
 }
 
 .contactInfo {
-  margin-top: var(--spacing-xl);
   padding-top: var(--spacing-lg);
   border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
@@ -173,6 +192,19 @@
 @media (max-width: 768px) {
   .contactSection {
     padding: 3rem 1.5rem;
+  }
+
+  .contactColumns {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+
+  .quickContact {
+    order: 2;
+  }
+
+  .contactForm {
+    order: 1;
   }
 
   .contactButtons {

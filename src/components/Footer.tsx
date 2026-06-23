@@ -3,8 +3,10 @@ import styles from './Footer.module.css';
 
 /*
   Footer Component
-  Dark footer shown on every page: copyright notice and a link to the
-  Trusted Trader listing where the verified review count can be seen.
+  Dark footer shown on every page: copyright notice, a link to the
+  Trusted Trader listing where the verified review count can be seen,
+  and a small, deliberately understated developer credit line linking
+  out to the developer's LinkedIn profile.
 */
 const Footer = (): ReactElement => {
   const currentYear = new Date().getFullYear();
@@ -23,6 +25,17 @@ const Footer = (): ReactElement => {
           className={styles.footerLink}
         >
           Verified on Trusted Trader
+        </a>
+      </p>
+      <p className={styles.creditLine}>
+        Designed and Developed by{' '}
+        <a
+          href="https://www.linkedin.com/in/kamil-szynklewski-917786297"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.creditLink}
+        >
+          KPS Studio
         </a>
       </p>
     </footer>

@@ -1,23 +1,33 @@
 # M.S. Renovation
 
-Premium brochure website for M.S. Renovation, a 5-star rated home improvement and
-renovation business serving Aberdeen, Scotland. Built with Next.js (App Router),
-TypeScript, and CSS Modules, deployed on Vercel.
+A brochure website for M.S. Renovation, a painter/decorator and home improvement business
+run by Maciej ("Matt") in Aberdeen, Scotland. He had a strong reputation and a perfect
+5-star rating on Trusted Trader, but no website — the goal here was simply to get him
+found online and make it easy for people to request a quote. Built with Next.js (App
+Router), TypeScript, and CSS Modules, deployed on Vercel.
 
 ## Status
 
 Production-ready. Homepage and gallery page are built, styled, and verified working on
 desktop and mobile. The project has been fully migrated to TypeScript with a `src/`
-directory structure, a darker premium color palette, and a scroll-darkening navigation
-header. The original HTML design demos and the JavaScript prototype have been removed.
+directory structure, a darker premium color palette, and a scroll-darkening, shrinking
+navigation header. The original HTML design demos and the JavaScript prototype have been
+removed.
 
 ## Tech Stack
 
 - **Framework**: Next.js 16 (App Router)
 - **Language**: TypeScript (strict mode, `noUnusedLocals`/`noUnusedParameters` enabled)
 - **Styling**: CSS Modules + `src/app/globals.css` (no Tailwind/Bootstrap)
-- **Icons**: react-icons (WhatsApp, Facebook)
+- **Icons**: react-icons (WhatsApp, Facebook, Instagram)
 - **Hosting**: Vercel
+
+## Links
+
+- Website: [msrenovation.co.uk](https://msrenovation.co.uk)
+- Facebook: [facebook.com/m.s.renovationaberdeen](https://www.facebook.com/m.s.renovationaberdeen)
+- Instagram: [instagram.com/m.s_renovation](https://www.instagram.com/m.s_renovation/)
+- Trusted Trader profile: [trustedtrader.scot/Aberdeen/MSRenovation-0001955](https://www.trustedtrader.scot/Aberdeen/MSRenovation-0001955.html)
 
 ## Project Structure
 
@@ -31,13 +41,24 @@ src/
 │   └── gallery/
 │       ├── page.tsx              Gallery ("Our Work") page
 │       └── page.module.css       Gallery page-only styles (header + closing CTA)
-├── components/                   Navigation, Hero, Services, Certificate, Reviews, Contact,
-│                                 GalleryGrid, Footer — each with a co-located .module.css
-├── types/index.ts                Shared TypeScript interfaces (Service, Review, Project, etc.)
+├── components/                   layout/Navigation + layout/GalleryNavigation (both shrink +
+│                                 darken on scroll), FadeInSection (generic scroll fade-in
+│                                 wrapper for server-component pages), Hero, Services (5
+│                                 services, flexbox card row), WhyChooseUs, Certificate
+│                                 (hoverable trust badges), Reviews (dark/glassmorphic
+│                                 carousel), ServiceAreas, FAQ (animated accordion), Contact
+│                                 (two-column: quick contact + form), BeforeAfterGallery (two
+│                                 independent before/after photo carousels, side by side on
+│                                 desktop), Footer — each with a co-located .module.css
+├── types/index.ts                Shared TypeScript interfaces (Service, Review, etc.)
 └── utils/useScrollAnimation.ts   Intersection Observer hook for scroll fade-ins
 public/
 ├── certificate.jpg                Aberdeen Trusted Trader certificate
-└── photos/                        Before/after project photos (empty — gallery currently uses placeholders)
+├── photos/                        Empty (.gitkeep only) — real WhatsApp photos were sorted out of here
+└── images/projects/msrenovation/before-after/
+    ├── before/                    10 real photos: in-progress/unfinished work, all rendered
+    └── after/                     13 real photos on disk, 11 rendered (2 kitchen photos are
+                                    excluded from the gallery, see Notes below)
 ```
 
 Path aliases are configured in `tsconfig.json`: `@/*`, `@/components/*`, `@/types/*`,
@@ -57,12 +78,20 @@ Darker, more premium tokens than the original demo, defined in `src/app/globals.
   in `--muted` for use on white cards)
 - `--light` / `--background` — warm cream section backgrounds
 
+Section padding sitewide comes from one token, `--spacing-2xl` (4.5rem top/bottom). It was
+trimmed down from 6rem after the site started to feel like it had too much dead air between
+sections — one shared token instead of per-section hardcoded padding, so a single change
+tightens the whole page consistently.
+
 ## Navigation Scroll Effect
 
 `Navigation.tsx` tracks `window.scrollY` and swaps between two header styles once the
 page scrolls past 50px: a flat white header at the top, and a gradient header with a
-heavier `--stone-dark` border and a shadow once scrolled. This runs independently of the
-existing active-section-highlighting logic for the nav links.
+heavier `--stone-dark` border and a shadow once scrolled, which also reduces the header's
+padding and the logo/nav-link font-size slightly (a CSS transition on `.headerScrolled` in
+`Navigation.module.css`, not a `transform: scale()` — the header is `position: sticky`, so a
+transform wouldn't shrink its reserved layout space and would leave a gap). This runs
+independently of the existing active-section-highlighting logic for the nav links.
 
 ## Getting Started
 
@@ -76,12 +105,78 @@ npx tsc --noEmit  # type-check only
 
 ## Notes
 
-- The gallery page uses gradient placeholder blocks for before/after photos. Drop real
-  project photos into `public/photos/` and swap them into `src/components/GalleryGrid.tsx`
-  when available.
+- `GalleryGrid.tsx` (the 3 placeholder case studies with gradient blocks and invented
+  Duration/Budget figures) has been **deleted**. None of the real client photos could be
+  confidently tied to those specific invented project names/scopes, and the client asked for
+  the cards to be removed entirely rather than published with fabricated details.
+- Real client photos (23 WhatsApp images) were organized into
+  `public/images/projects/msrenovation/before-after/` and are rendered by a
+  `BeforeAfterGallery.tsx` component on `/gallery`: two independent, auto-rotating carousels
+  (arrow buttons + dot indicators) — a "Before" carousel and an "After" carousel. An earlier
+  pass tried to pair specific before/after photos into a named "hallway" project — that
+  pairing turned out to be wrong (two of the three "after" photos were a different property
+  with a different door style) and has been undone. Photos are now classified independently
+  by visible construction stage only, with no pairing, project names, or scope details
+  claimed. See `AGENTS.md`'s "Photo Organization" section for the full breakdown and naming
+  convention.
+- A SEO/content pass tightened the homepage `<title>`/description and the Hero `<h1>` for
+  length and keyword targeting, expanded `Services.tsx` with capability bullet lists, and
+  added new homepage sections: `WhyChooseUs.tsx`, `ServiceAreas.tsx`, and `FAQ.tsx` (8
+  questions, animated accordion). A "Service Areas" section was initially skipped because its
+  proposed town list was unverified; it was added in a later round once the client confirmed
+  the list (Aberdeen, Bridge of Don, Dyce, Cove Bay, Bucksburn, Danestone, Westhill,
+  Portlethen, Kingswells, Aberdeenshire) was accurate. Several other claims (insurance status,
+  a specific emergency-response time, a trading-since date, specific price/duration figures)
+  remain deliberately omitted as unverifiable rather than invented. See `AGENTS.md`'s "SEO and
+  Content Pass" and "Second Prompt Pass" sections for the full list of what was added, what
+  was left out, and why.
+- A later improvement prompt asked for a paired `BeforeAfterSlider` component with specific
+  before/after image pairs and project titles — this was **not** built, since it directly
+  conflicted with the client's own earlier decision that the photos cannot be honestly paired.
+  The existing two-carousel `BeforeAfterGallery.tsx` (no pairing, no titles) was kept.
+- `BeforeAfterGallery.tsx` uses static image imports with exact file paths, so moving a photo
+  between the `before/`/`after/` folders without updating the corresponding import will break
+  the build. If a photo needs reclassifying, update its import path, move its entry to the
+  other `BEFORE_PHOTOS`/`AFTER_PHOTOS` array, and ideally rename the file to match (this
+  happened once already — see `AGENTS.md`'s "Bug Fix: Swapped Before/After Photos").
+- The FAQ accordion (`FAQ.tsx`/`FAQ.module.css`) animates open/closed with a CSS
+  `grid-template-rows` transition rather than mounting/unmounting the answer, so it stays
+  smooth regardless of answer length.
+- `Reviews.module.css` uses a dark gradient background and a glassmorphic (frosted,
+  translucent) carousel card, intentionally inverted from the white sections around it for
+  visual separation. `Reviews.tsx`'s existing carousel logic/class names were kept as-is —
+  only the CSS and one new line of copy changed.
+- **Kitchen fitting is no longer offered** (a full kitchen project is too much for one
+  tradesperson) and has been removed from `Services.tsx`, `WhyChooseUs.tsx`, `FAQ.tsx`, the
+  homepage metadata/keywords in `layout.tsx`, and the `knowsAbout` list in `schema.json`. Two
+  real photos of completed kitchen jobs were removed from `BeforeAfterGallery.tsx`'s rendered
+  carousel (not deleted from disk — see `AGENTS.md`'s "Kitchen Work Removal" section) so the
+  gallery doesn't visually suggest an active service that's been discontinued.
+- `.servicesGrid` is flexbox (`flex-wrap` + `justify-content: center`), not CSS Grid — Grid's
+  `auto-fit`/`justify-content: center` only centers the grid's overall track, not an
+  individual incomplete last row, which still looked lopsided with 5 cards. Flexbox centers
+  each wrapped row's leftover space independently.
+- The gallery page (`/gallery`) now uses `FadeInSection.tsx` for scroll fade-ins, since
+  `gallery/page.tsx` exports `metadata` and so can't itself be a client component to use
+  `useScrollAnimation` directly. `GalleryNavigation.tsx` also shrinks/darkens on scroll now,
+  matching the homepage `Navigation`, and `BeforeAfterGallery.tsx`'s two carousels sit side by
+  side on desktop (stacked below 900px) instead of one narrow column stacked above the other.
+- `Footer.tsx` has a small "Designed and Developed by KPS Studio" credit line linking to the
+  developer's LinkedIn, styled deliberately quieter than the business's own footer lines.
+- `Contact.tsx` is a two-column layout inside one stone-dark gradient card: WhatsApp/Facebook/
+  Instagram icon buttons plus phone/location/membership details on the left, the quote form
+  on the right (stacks to form-then-contact-info on mobile). `Certificate.tsx`'s trust badges
+  (Trusted Trader Member / 5.0 from 16 Reviews / Backed by Police Scotland) now lift and
+  highlight on hover, matching the rest of the site's card interactions.
 - The contact form builds a pre-filled WhatsApp message and opens WhatsApp directly —
   there is no backend, by design.
 - No ampersands anywhere in copy ("and" is used instead), per the client's brand style.
 - The scroll fade-in animations use a typed React hook (`useScrollAnimation`) rather than
   a single global `document.querySelectorAll` pass, since each card/section needs its own
   independent Intersection Observer instance as React mounts them.
+- `npm run lint` does not currently run — `next lint` was removed in Next.js 16 and this
+  project has never had a standalone ESLint config set up. Pre-existing gap, not introduced
+  by any specific change.
+- This repo also has an `AGENTS.md` (previously `agent.md`) tracking the project's status,
+  business facts, and a running log of changes round-by-round — useful if you want the fuller
+  story behind any of the notes above.

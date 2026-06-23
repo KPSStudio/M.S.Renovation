@@ -73,6 +73,15 @@
   border-radius: 50px;
   border: 1px solid var(--border-light);
   box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+  cursor: default;
+}
+
+.trustBadge:hover {
+  border-color: var(--stone-dark);
+  background: var(--light);
+  box-shadow: var(--shadow-stone-sm);
+  transform: translateY(-3px);
 }
 
 @media (max-width: 768px) {

@@ -5,35 +5,64 @@ import useScrollAnimation from '@/utils/useScrollAnimation';
 import type { Service } from '@/types';
 import styles from './Services.module.css';
 
-/* The six services offered, in display order */
+/* The five services offered, in display order. Kitchen fitting was
+   discontinued (a full kitchen project is too much for a single
+   tradesperson) and removed from this list entirely. */
 const SERVICES_LIST: Service[] = [
   {
     title: 'Painting and Decorating',
     description:
-      'Expert interior and exterior painting throughout Aberdeen, with premium finishes and meticulous attention to detail.',
+      'Expert interior and exterior painting throughout Aberdeen. From a single freshly painted room to a full house redecoration, we prepare every surface properly and deliver a premium, long-lasting finish with meticulous attention to detail.',
+    details: [
+      'Interior and exterior painting',
+      'Wall colour changes and full redecoration',
+      'Surface preparation and repairs',
+      'Premium, long-lasting finishes',
+    ],
   },
   {
     title: 'Plastering and Taping',
     description:
-      'Professional drywall, artex, and ames taping for flawless, smooth finishes every time.',
+      'Professional drywall, artex, and ames taping for flawless, smooth finishes every time. Whether it is repairing damaged plasterboard or finishing a new wall, every surface is prepared to the highest standard before any paint goes on.',
+    details: [
+      'Drywall installation and repair',
+      'Artex and ames taping',
+      'Surface preparation for painting',
+      'Smooth, flawless finishes',
+    ],
   },
   {
     title: 'Carpentry and Joinery',
-    description: 'Bespoke joinery work and carpentry for custom solutions that fit perfectly.',
+    description:
+      'Bespoke joinery work and carpentry for custom solutions that fit perfectly. From door frames and skirting to custom-built fittings, carpentry work is finished to the same high standard as the rest of the job.',
+    details: [
+      'Bespoke joinery',
+      'Door and frame fitting',
+      'Skirting and trim work',
+      'Custom-built fittings',
+    ],
   },
   {
     title: 'Bathroom Refurbishment',
     description:
-      'Complete bathroom renovations for Aberdeen homes, with professional tiling and installations.',
-  },
-  {
-    title: 'Kitchen Fitting',
-    description:
-      'Professional kitchen installation and finishing work to your exact specifications.',
+      'Complete bathroom renovations for Aberdeen homes, with professional tiling and installations. From a full retiling job to a complete refit, every stage is handled so your bathroom is finished to a high standard.',
+    details: [
+      'Full bathroom renovations',
+      'Professional tiling',
+      'Fixture and fitting installation',
+      'Repairs and redecoration',
+    ],
   },
   {
     title: 'Property Repair and Maintenance',
-    description: 'Rapid response to damage, repairs, and ongoing maintenance work across Aberdeenshire.',
+    description:
+      'Repairs and ongoing maintenance work across Aberdeenshire, from damage repairs to general property upkeep. Every job starts with a clear assessment and an honest quote before any work begins.',
+    details: [
+      'Damage repair',
+      'General property maintenance',
+      'Honest, upfront quotes',
+      'Coverage across Aberdeenshire',
+    ],
   },
 ];
 
@@ -60,13 +89,22 @@ const ServiceCard = ({ service }: ServiceCardProps): ReactElement => {
     >
       <h3 className={styles.serviceCardTitle}>{service.title}</h3>
       <p className={styles.serviceCardDescription}>{service.description}</p>
+      {service.details && (
+        <ul className={styles.serviceCardDetailsList}>
+          {service.details.map((detail) => (
+            <li key={detail} className={styles.serviceCardDetailsListItem}>
+              {detail}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
 
 /*
   Services Component
-  Displays a grid of 6 service cards with hover effects.
+  Displays a grid of 5 service cards with hover effects.
   Each card shows a service title and description, and animates in
   on scroll with staggered timing.
 */

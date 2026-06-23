@@ -13,7 +13,9 @@ const Hero = (): ReactElement => {
   return (
     <section className={styles.heroSection}>
       <div className={styles.heroContent}>
-        <h1 className={styles.heroHeadline}>Quality Renovation and Home Improvement</h1>
+        <h1 className={styles.heroHeadline}>
+          Expert Painter, Decorator and Home Improvements in Aberdeen
+        </h1>
         <p className={styles.heroSubheading}>
           Trusted by families across Aberdeen. 5-star rated for attention to detail.
         </p>

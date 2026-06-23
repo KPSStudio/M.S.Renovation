@@ -11,10 +11,12 @@ export interface NavLink {
   id: string;
 }
 
-/* A single service shown in the Services grid */
+/* A single service shown in the Services grid. "details" is an optional
+   list of short capability bullets shown under the description. */
 export interface Service {
   title: string;
   description: string;
+  details?: string[];
 }
 
 /* A single client testimonial shown in the Reviews carousel */
@@ -22,19 +24,6 @@ export interface Review {
   author: string;
   text: string;
   budget: string;
-}
-
-/* One line item in a gallery project's "Project Scope" details box */
-export interface ProjectDetail {
-  label: string;
-  value: string;
-}
-
-/* A single before/after project shown on the gallery page */
-export interface Project {
-  title: string;
-  description: string;
-  details: ProjectDetail[];
 }
 
 /* The contact form's editable field values */

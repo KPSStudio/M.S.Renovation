@@ -1,0 +1,74 @@
+/*
+  WhyChooseUs Styles
+  3-column responsive grid of reason cards (1 column on mobile),
+  styled consistently with the Services grid.
+*/
+
+.whyChooseUsSection {
+  padding: var(--spacing-2xl) var(--spacing-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sectionHeading {
+  text-align: center;
+}
+
+.sectionSubtext {
+  text-align: center;
+  color: var(--text-gray);
+  max-width: 600px;
+  margin: 0 auto var(--spacing-xl);
+  font-weight: 400;
+}
+
+.reasonsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--spacing-xl);
+}
+
+.reasonCard {
+  background: white;
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border-light);
+  text-align: center;
+  transition: all var(--transition-smooth);
+  box-shadow: var(--shadow-sm);
+}
+
+.reasonCard:hover {
+  border-color: var(--stone-dark);
+  box-shadow: var(--shadow-stone-lg);
+  transform: translateY(-8px);
+}
+
+.reasonIcon {
+  font-size: 2rem;
+  color: var(--stone-dark);
+  margin-bottom: var(--spacing-sm);
+}
+
+.reasonTitle {
+  color: var(--stone-dark);
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.reasonDescription {
+  color: var(--text-gray);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .whyChooseUsSection {
+    padding: 3rem 1.5rem;
+  }
+
+  .reasonsGrid {
+    grid-template-columns: 1fr;
+  }
+}

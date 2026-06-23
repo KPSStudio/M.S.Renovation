@@ -1,50 +1,50 @@
-import type { Metadata, Viewport } from 'next';
-import type { ReactElement, ReactNode } from 'react';
-import { Analytics } from '@vercel/analytics/react';
-import Footer from '@/components/Footer';
-import schema from './schema.json';
-import './globals.css';
+import type { Metadata, Viewport } from "next";
+import type { ReactElement, ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/react";
+import Footer from "@/components/Footer";
+import schema from "./schema.json";
+import "./globals.css";
 
-const SITE_URL = 'https://msrenovation.co.uk';
+const SITE_URL = "https://msrenovation.co.uk";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'M.S. Renovation | Painter and Decorator in Aberdeen | 5-Star Rated',
-    template: '%s | M.S. Renovation',
+    default: "M.S. Renovation | Painter and Decorator in Aberdeen",
+    template: "%s | M.S. Renovation",
   },
   description:
-    'Professional painter, decorator and home improvements in Aberdeen, Scotland. Trusted Trader certified, 5-star rated. Painting, decorating, bathroom, kitchen, and carpentry services. Free quotes on 07572 916190.',
+    "Professional painter, decorator and home improvements in Aberdeen, Scotland. Trusted Trader certified, 5-star rated. Free quotes on 07572 916190.",
   keywords: [
-    'painter decorator Aberdeen',
-    'painter Aberdeen',
-    'decorator Aberdeen',
-    'home improvements Aberdeen',
-    'bathroom renovation Aberdeen',
-    'kitchen fitting Aberdeen',
-    'painting services Scotland',
-    'trusted trader painter',
-    'property repairs Aberdeen',
+    "painter decorator Aberdeen",
+    "painter Aberdeen",
+    "decorator Aberdeen",
+    "home improvements Aberdeen",
+    "bathroom renovation Aberdeen",
+    "painting services Scotland",
+    "trusted trader painter",
+    "property repairs Aberdeen",
   ],
   alternates: {
-    canonical: '/',
+    canonical: "/",
   },
   openGraph: {
-    type: 'website',
-    locale: 'en_GB',
+    type: "website",
+    locale: "en_GB",
     url: SITE_URL,
-    siteName: 'M.S. Renovation',
-    title: 'M.S. Renovation | Painter and Decorator in Aberdeen',
+    siteName: "M.S. Renovation",
+    title: "M.S. Renovation | Painter and Decorator in Aberdeen",
     description:
-      'Quality home improvement and renovation services in Aberdeen. 5-star rated, Trusted Trader certified. Painting, decorating, bathrooms, kitchens, and more.',
+      "Quality home improvement and renovation services in Aberdeen. 5-star rated, Trusted Trader certified. Painting, decorating, bathrooms, repairs, and more.",
   },
   twitter: {
-    card: 'summary',
-    title: 'M.S. Renovation | Painter and Decorator in Aberdeen',
-    description: 'Professional home improvements and renovation services in Aberdeen, Scotland.',
+    card: "summary",
+    title: "M.S. Renovation | Painter and Decorator in Aberdeen",
+    description:
+      "Professional home improvements and renovation services in Aberdeen, Scotland.",
   },
   verification: {
-    google: 'ig_KRNjnOxjAzocFMJUgKAliHFSck74VCABBnj7uQ2o',
+    google: "ig_KRNjnOxjAzocFMJUgKAliHFSck74VCABBnj7uQ2o",
   },
   robots: {
     index: true,
@@ -52,15 +52,15 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-snippet': -1,
-      'max-image-preview': 'large',
-      'max-video-preview': -1,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
     },
   },
 };
 
 export const viewport: Viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1,
   maximumScale: 5,
 };
@@ -74,7 +74,11 @@ export const viewport: Viewport = {
   page-specific rather than shared here: the homepage uses the full
   Navigation, the gallery page uses the simplified GalleryNavigation.
 */
-export default function RootLayout({ children }: { children: ReactNode }): ReactElement {
+export default function RootLayout({
+  children,
+}: {
+  children: ReactNode;
+}): ReactElement {
   return (
     <html lang="en">
       <head>
