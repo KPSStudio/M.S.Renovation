@@ -42,6 +42,10 @@
   box-shadow: var(--shadow-sm);
   flex: 0 1 320px;
   max-width: 340px;
+  /* Vertical stack so the "Learn more" cue can be pushed to the bottom
+     of every card regardless of how much text sits above it */
+  display: flex;
+  flex-direction: column;
 }
 
 /* Diagonal light sweep that animates across the card on hover */
@@ -102,6 +106,36 @@
   left: 0;
   color: var(--stone-dark);
   font-weight: 700;
+}
+
+/* "Learn more" cue. margin-top:auto pushes it to the bottom of the card
+   so it lines up across cards no matter how much text is above it. The
+   link's ::after stretches over the whole card so a click anywhere on
+   the card navigates to the service page, while the inner text span
+   slides right slightly on hover. */
+.serviceCardCta {
+  display: block;
+  margin-top: auto;
+  padding-top: var(--spacing-lg);
+  color: var(--stone-dark);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.serviceCardCta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.serviceCardCtaText {
+  display: inline-block;
+  transition: transform var(--transition-normal);
+}
+
+.serviceCard:hover .serviceCardCtaText {
+  transform: translateX(4px);
 }
 
 @media (max-width: 768px) {

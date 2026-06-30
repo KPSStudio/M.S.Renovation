@@ -126,6 +126,55 @@
   cursor: pointer;
 }
 
+/* Services dropdown. On desktop the menu is an absolute panel that
+   opens on hover or keyboard focus; the dropdownMenuOpen class also
+   opens it (used for the tap toggle on mobile). */
+.dropdown {
+  position: relative;
+}
+
+.dropdownToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.dropdownMenu {
+  list-style: none;
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 240px;
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-xs) 0;
+  z-index: 110;
+}
+
+.dropdown:hover .dropdownMenu,
+.dropdown:focus-within .dropdownMenu,
+.dropdownMenu.dropdownMenuOpen {
+  display: block;
+}
+
+.dropdownLink {
+  display: block;
+  padding: 0.6rem var(--spacing-md);
+  color: var(--text-gray);
+  font-size: 0.92rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.dropdownLink:hover {
+  background: var(--light);
+  color: var(--stone-dark);
+}
+
 @media (max-width: 980px) {
   .navigationLinksList {
     display: none;
@@ -147,5 +196,28 @@
 
   .mobileMenuButton {
     display: flex;
+  }
+
+  /* On mobile the submenu sits inline under the toggle (no absolute
+     panel) and opens only via the tap toggle, since there is no hover. */
+  .dropdown {
+    position: static;
+  }
+
+  .dropdownMenu {
+    position: static;
+    box-shadow: none;
+    border: none;
+    padding: 0 0 0 var(--spacing-md);
+    min-width: 0;
+  }
+
+  .dropdown:hover .dropdownMenu,
+  .dropdown:focus-within .dropdownMenu {
+    display: none;
+  }
+
+  .dropdownMenu.dropdownMenuOpen {
+    display: block;
   }
 }

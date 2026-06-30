@@ -1,0 +1,81 @@
+.featureGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  margin: var(--spacing-lg) 0 var(--spacing-xl);
+}
+
+/* Each "what's included" item as a card that lifts, gains a stone-dark
+   border and shadow, and has a diagonal light sweep on hover, matching
+   the homepage service cards. Two per row on desktop, one on mobile. */
+.featureCard {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background: white;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+  flex: 1 1 calc(50% - var(--spacing-md));
+  min-width: 240px;
+}
+
+/* Diagonal light sweep that animates across the card on hover */
+.featureCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(201, 149, 72, 0.12), transparent);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.featureCard:hover {
+  border-color: var(--stone-dark);
+  box-shadow: var(--shadow-stone-lg);
+  transform: translateY(-6px);
+}
+
+.featureCard:hover::before {
+  left: 100%;
+}
+
+/* Round checkmark badge on the left of each card */
+.featureIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: var(--stone-dark);
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: transform var(--transition-normal);
+}
+
+.featureCard:hover .featureIcon {
+  transform: scale(1.1);
+}
+
+.featureLabel {
+  color: var(--dark);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .featureCard {
+    flex: 1 1 100%;
+  }
+}

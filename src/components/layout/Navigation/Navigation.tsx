@@ -3,33 +3,30 @@
 import { useEffect, useState, type ReactElement } from 'react';
 import Link from 'next/link';
 import type { NavLink } from '@/types';
+import { SERVICE_PAGES } from '@/data/services';
 import styles from './Navigation.module.css';
 
 /*
   Navigation Component
-  Full header shown only on the homepage (the gallery page uses the
-  simpler GalleryNavigation instead). Shows the business logo on the
-  left and anchor links on the right for every major homepage section
-  — Services, Why Choose Us, Our Work, Reviews, Areas, FAQ, Contact —
-  all of which scroll to a section on this page.
+  Full header shown only on the homepage (the gallery and service pages
+  use the simpler GalleryNavigation instead). Logo on the left, links on
+  the right: a "Services" dropdown that links out to the dedicated
+  service pages, followed by anchor links for the homepage sections
+  (Why Choose Us, Our Work, Reviews, Areas, FAQ, Contact).
 
-  Three independent scroll/keyboard behaviors, each in its own effect:
-  - Darken-and-shrink effect: once window.scrollY passes 50px, the
-    header swaps from a flat white background to a gradient with a
-    heavier stone-dark border and a shadow, and its padding and
-    logo/link font-size shrink slightly (isScrolled state). The CSS
-    transitions live on the .headerScrolled class in
-    Navigation.module.css. Reading window.scrollY is cheap and does
-    not force layout, so a passive scroll listener is fine here.
-  - Active-section tracking: whichever section is currently scrolled
-    into view gets the active underline. This uses an
-    IntersectionObserver scroll-spy rather than reading every
-    section's offsetTop on every scroll event, which previously
-    forced a layout recalculation on each scroll frame and could
-    stutter on mobile.
-  - Escape-to-close: pressing Escape closes the open mobile menu.
+  Behaviors, each in its own effect:
+  - Darken-and-shrink: once window.scrollY passes 50px the header swaps
+    to a gradient with a heavier border and shadow and shrinks slightly.
+    Reading scrollY is cheap and does not force layout, so a passive
+    scroll listener is fine.
+  - Active-section tracking: an IntersectionObserver scroll-spy marks
+    the section currently in view, instead of measuring every section's
+    offset on every scroll frame.
+  - Escape-to-close: Escape closes the open mobile menu and/or the
+    Services dropdown.
 
-  On mobile, the links collapse behind a toggle button.
+  The Services dropdown opens on hover or keyboard focus on desktop (via
+  CSS) and on tap on mobile (via the isServicesOpen state).
 */
 const NAVIGATION_LINKS: NavLink[] = [
   { label: 'Services', href: '#services', id: 'services' },
@@ -43,6 +40,10 @@ const NAVIGATION_LINKS: NavLink[] = [
 
 const SECTION_IDS = NAVIGATION_LINKS.map((link) => link.id);
 
+/* The plain anchor links shown after the Services dropdown. The
+   "services" entry is handled by the dropdown, so it is excluded here. */
+const ANCHOR_LINKS = NAVIGATION_LINKS.filter((link) => link.id !== 'services');
+
 const Navigation = (): ReactElement => {
   /* True once the page has scrolled past 50px, drives the header darken effect */
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -50,6 +51,7 @@ const Navigation = (): ReactElement => {
   /* Tracks which section id is currently active while scrolling */
   const [activeSection, setActiveSection] = useState<string>('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const [isServicesOpen, setIsServicesOpen] = useState<boolean>(false);
 
   // Header darken effect. Reading scrollY does not trigger layout, so a
   // plain passive listener is cheap enough without throttling.
@@ -90,21 +92,25 @@ const Navigation = (): ReactElement => {
     return () => observer.disconnect();
   }, []);
 
-  // Close the mobile menu when Escape is pressed (only while it is open).
+  // Close the mobile menu and the Services dropdown on Escape.
   useEffect(() => {
-    if (!isMobileMenuOpen) return;
+    if (!isMobileMenuOpen && !isServicesOpen) return;
 
     const handleKeyDown = (event: KeyboardEvent): void => {
-      if (event.key === 'Escape') setIsMobileMenuOpen(false);
+      if (event.key === 'Escape') {
+        setIsMobileMenuOpen(false);
+        setIsServicesOpen(false);
+      }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isMobileMenuOpen]);
+  }, [isMobileMenuOpen, isServicesOpen]);
 
-  // Closes the mobile menu whenever a link is clicked
+  // Closes the mobile menu and Services dropdown whenever a link is clicked
   const handleLinkClick = (): void => {
     setIsMobileMenuOpen(false);
+    setIsServicesOpen(false);
   };
 
   const headerClassName = `${styles.header} ${isScrolled ? styles.headerScrolled : styles.headerAtTop}`;
@@ -117,7 +123,7 @@ const Navigation = (): ReactElement => {
           M.S. Renovation
         </Link>
 
-        {/* Mobile menu toggle button, only visible below 768px */}
+        {/* Mobile menu toggle button, only visible below the breakpoint */}
         <button
           type="button"
           className={styles.mobileMenuButton}
@@ -133,7 +139,37 @@ const Navigation = (): ReactElement => {
             isMobileMenuOpen ? styles.mobileMenuOpen : ''
           }`}
         >
-          {NAVIGATION_LINKS.map((link) => {
+          {/* Services dropdown, linking out to the dedicated service pages */}
+          <li className={styles.dropdown}>
+            <button
+              type="button"
+              className={`${styles.navigationLink} ${styles.dropdownToggle}`}
+              onClick={() => setIsServicesOpen((open) => !open)}
+              aria-expanded={isServicesOpen}
+              aria-haspopup="true"
+            >
+              Services <span aria-hidden="true">▾</span>
+            </button>
+            <ul
+              className={`${styles.dropdownMenu} ${
+                isServicesOpen ? styles.dropdownMenuOpen : ''
+              }`}
+            >
+              {SERVICE_PAGES.map((page) => (
+                <li key={page.href}>
+                  <Link
+                    href={page.href}
+                    onClick={handleLinkClick}
+                    className={styles.dropdownLink}
+                  >
+                    {page.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </li>
+
+          {ANCHOR_LINKS.map((link) => {
             const isActive = activeSection === link.id;
 
             return (

@@ -1,7 +1,9 @@
 'use client';
 
+import Link from 'next/link';
 import type { ReactElement } from 'react';
 import useScrollAnimation from '@/utils/useScrollAnimation';
+import { SERVICE_PAGES } from '@/data/services';
 import type { Service } from '@/types';
 import styles from './Services.module.css';
 
@@ -79,6 +81,7 @@ interface ServiceCardProps {
 */
 const ServiceCard = ({ service }: ServiceCardProps): ReactElement => {
   const [cardRef, isVisible] = useScrollAnimation();
+  const servicePage = SERVICE_PAGES.find((page) => page.title === service.title);
 
   return (
     <div
@@ -97,6 +100,13 @@ const ServiceCard = ({ service }: ServiceCardProps): ReactElement => {
             </li>
           ))}
         </ul>
+      )}
+      {servicePage && (
+        <Link href={servicePage.href} className={styles.serviceCardCta}>
+          {/* This link's ::after stretches over the whole card, so a click
+              anywhere on the card navigates to the service page. */}
+          <span className={styles.serviceCardCtaText}>Learn more →</span>
+        </Link>
       )}
     </div>
   );
