@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState, type ReactElement } from 'react';
+import type { ReactElement } from 'react';
+import useCarousel from '@/utils/useCarousel';
 import type { Review } from '@/types';
 import styles from './Reviews.module.css';
 
@@ -49,29 +50,10 @@ const TOTAL_SLIDES = REVIEWS_LIST.length;
   so it doesn't immediately jump again right after a manual change.
 */
 const Reviews = (): ReactElement => {
-  const [currentSlide, setCurrentSlide] = useState<number>(0);
-  const autoRotateTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const goToSlide = (slideIndex: number): void => {
-    setCurrentSlide(slideIndex);
-  };
-
-  const goToNextSlide = (): void => {
-    setCurrentSlide((slide) => (slide + 1) % TOTAL_SLIDES);
-  };
-
-  const goToPreviousSlide = (): void => {
-    setCurrentSlide((slide) => (slide - 1 + TOTAL_SLIDES) % TOTAL_SLIDES);
-  };
-
-  // Restarts the auto-rotate timer whenever the slide changes, whether
-  // that change came from the timer itself or a manual click
-  useEffect(() => {
-    autoRotateTimerRef.current = setInterval(goToNextSlide, AUTO_ROTATE_INTERVAL_MS);
-    return () => {
-      if (autoRotateTimerRef.current) clearInterval(autoRotateTimerRef.current);
-    };
-  }, [currentSlide]);
+  const { currentSlide, goToSlide, goToNext, goToPrevious } = useCarousel(
+    TOTAL_SLIDES,
+    AUTO_ROTATE_INTERVAL_MS
+  );
 
   return (
     <section className={styles.reviewsSection} id="reviews">
@@ -106,7 +88,7 @@ const Reviews = (): ReactElement => {
           <button
             type="button"
             className={styles.carouselArrowButton}
-            onClick={goToPreviousSlide}
+            onClick={goToPrevious}
             aria-label="Previous review"
           >
             ‹
@@ -131,7 +113,7 @@ const Reviews = (): ReactElement => {
           <button
             type="button"
             className={styles.carouselArrowButton}
-            onClick={goToNextSlide}
+            onClick={goToNext}
             aria-label="Next review"
           >
             ›

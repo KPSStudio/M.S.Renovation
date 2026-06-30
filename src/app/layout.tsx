@@ -7,6 +7,12 @@ import "./globals.css";
 
 const SITE_URL = "https://msrenovation.co.uk";
 
+// Image used when the site is shared on social apps (WhatsApp, Facebook, X).
+// Points at a real finished-project photo rather than a logo, since there
+// is no logo yet. Swap this single path to change the share image.
+const SOCIAL_SHARE_IMAGE =
+  "/images/projects/msrenovation/before-after/after/msrenovation-after-open-plan-kitchen-living-01.jpg";
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -36,12 +42,19 @@ export const metadata: Metadata = {
     title: "M.S. Renovation | Painter and Decorator in Aberdeen",
     description:
       "Quality home improvement and renovation services in Aberdeen. 5-star rated, Trusted Trader certified. Painting, decorating, bathrooms, repairs, and more.",
+    images: [
+      {
+        url: SOCIAL_SHARE_IMAGE,
+        alt: "Open-plan kitchen and living room finished by M.S. Renovation in Aberdeen",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "M.S. Renovation | Painter and Decorator in Aberdeen",
     description:
       "Professional home improvements and renovation services in Aberdeen, Scotland.",
+    images: [SOCIAL_SHARE_IMAGE],
   },
   verification: {
     google: "ig_KRNjnOxjAzocFMJUgKAliHFSck74VCABBnj7uQ2o",

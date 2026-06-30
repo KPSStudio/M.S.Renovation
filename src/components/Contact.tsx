@@ -61,7 +61,11 @@ const Contact = (): ReactElement => {
       whatsappMessage
     )}`;
 
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    // Navigate the current tab to WhatsApp rather than opening a new one.
+    // window.open(..., '_blank') can be silently blocked by popup blockers
+    // on some mobile browsers; a direct navigation is far more reliable
+    // and is what a visitor expects when they tap "Send via WhatsApp".
+    window.location.href = whatsappUrl;
   };
 
   return (

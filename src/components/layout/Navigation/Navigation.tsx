@@ -13,17 +13,21 @@ import styles from './Navigation.module.css';
   — Services, Why Choose Us, Our Work, Reviews, Areas, FAQ, Contact —
   all of which scroll to a section on this page.
 
-  Two independent scroll-driven behaviors:
+  Three independent scroll/keyboard behaviors, each in its own effect:
   - Darken-and-shrink effect: once window.scrollY passes 50px, the
     header swaps from a flat white background to a gradient with a
     heavier stone-dark border and a shadow, and its padding and
-    logo/link font-size shrink slightly (isScrolled state). All of
-    this is driven by CSS transitions on the .headerScrolled class in
-    Navigation.module.css, not inline styles, so it stays GPU-cheap
-    and doesn't fight the header's position: sticky layout.
+    logo/link font-size shrink slightly (isScrolled state). The CSS
+    transitions live on the .headerScrolled class in
+    Navigation.module.css. Reading window.scrollY is cheap and does
+    not force layout, so a passive scroll listener is fine here.
   - Active-section tracking: whichever section is currently scrolled
-    into view gets the active underline, tracked by checking each
-    section's offsetTop (activeSection state).
+    into view gets the active underline. This uses an
+    IntersectionObserver scroll-spy rather than reading every
+    section's offsetTop on every scroll event, which previously
+    forced a layout recalculation on each scroll frame and could
+    stutter on mobile.
+  - Escape-to-close: pressing Escape closes the open mobile menu.
 
   On mobile, the links collapse behind a toggle button.
 */
@@ -47,25 +51,56 @@ const Navigation = (): ReactElement => {
   const [activeSection, setActiveSection] = useState<string>('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
+  // Header darken effect. Reading scrollY does not trigger layout, so a
+  // plain passive listener is cheap enough without throttling.
   useEffect(() => {
     const handleScroll = (): void => {
       setIsScrolled(window.scrollY > 50);
-
-      let currentSection = '';
-
-      SECTION_IDS.forEach((sectionId) => {
-        const element = document.getElementById(sectionId);
-        if (element && window.scrollY >= element.offsetTop - 100) {
-          currentSection = sectionId;
-        }
-      });
-
-      setActiveSection(currentSection);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Active-section scroll-spy. The observer fires only when a section
+  // crosses a thin band roughly a third of the way down the viewport,
+  // so we never measure section positions on every scroll frame.
+  useEffect(() => {
+    const sections = SECTION_IDS.map((id) => document.getElementById(id)).filter(
+      (element): element is HTMLElement => element !== null
+    );
+
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const nearestToTop = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+
+        if (nearestToTop) {
+          setActiveSection(nearestToTop.target.id);
+        }
+      },
+      { rootMargin: '-30% 0px -60% 0px', threshold: 0 }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  // Close the mobile menu when Escape is pressed (only while it is open).
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent): void => {
+      if (event.key === 'Escape') setIsMobileMenuOpen(false);
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isMobileMenuOpen]);
 
   // Closes the mobile menu whenever a link is clicked
   const handleLinkClick = (): void => {

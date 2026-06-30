@@ -2,8 +2,9 @@
 
 import Image from 'next/image';
 import type { StaticImageData } from 'next/image';
-import { useEffect, useRef, useState, type ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import useScrollAnimation from '@/utils/useScrollAnimation';
+import useCarousel from '@/utils/useCarousel';
 import beforeLivingRoomPlastered from '../../public/images/projects/msrenovation/before-after/before/msrenovation-before-living-room-plastered-01.jpg';
 import beforeStructuralOpeningOne from '../../public/images/projects/msrenovation/before-after/before/msrenovation-before-structural-opening-01.jpg';
 import beforePlasteredAlcove from '../../public/images/projects/msrenovation/before-after/before/msrenovation-before-plastered-alcove-01.jpg';
@@ -155,30 +156,11 @@ interface PhotoCarouselProps {
   (Before, After), each with its own slide state and timer.
 */
 const PhotoCarousel = ({ photos, groupLabel }: PhotoCarouselProps): ReactElement => {
-  const [currentSlide, setCurrentSlide] = useState<number>(0);
-  const autoRotateTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const totalSlides = photos.length;
-
-  const goToSlide = (slideIndex: number): void => {
-    setCurrentSlide(slideIndex);
-  };
-
-  const goToNextSlide = (): void => {
-    setCurrentSlide((slide) => (slide + 1) % totalSlides);
-  };
-
-  const goToPreviousSlide = (): void => {
-    setCurrentSlide((slide) => (slide - 1 + totalSlides) % totalSlides);
-  };
-
-  // Restarts the auto-rotate timer whenever the slide changes, whether
-  // that change came from the timer itself or a manual click
-  useEffect(() => {
-    autoRotateTimerRef.current = setInterval(goToNextSlide, AUTO_ROTATE_INTERVAL_MS);
-    return () => {
-      if (autoRotateTimerRef.current) clearInterval(autoRotateTimerRef.current);
-    };
-  }, [currentSlide]);
+  const { currentSlide, goToSlide, goToNext, goToPrevious } = useCarousel(
+    totalSlides,
+    AUTO_ROTATE_INTERVAL_MS
+  );
 
   return (
     <div className={styles.carouselContainer}>
@@ -203,7 +185,7 @@ const PhotoCarousel = ({ photos, groupLabel }: PhotoCarouselProps): ReactElement
         <button
           type="button"
           className={styles.carouselArrowButton}
-          onClick={goToPreviousSlide}
+          onClick={goToPrevious}
           aria-label={`Previous ${groupLabel} photo`}
         >
           ‹
@@ -228,7 +210,7 @@ const PhotoCarousel = ({ photos, groupLabel }: PhotoCarouselProps): ReactElement
         <button
           type="button"
           className={styles.carouselArrowButton}
-          onClick={goToNextSlide}
+          onClick={goToNext}
           aria-label={`Next ${groupLabel} photo`}
         >
           ›

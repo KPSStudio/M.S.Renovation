@@ -26,6 +26,9 @@ export const metadata: Metadata = {
     description:
       'Quality painting, decorating, and home renovation services. 5-star Trusted Trader. Free consultations available.',
     url: '/',
+    images: [
+      '/images/projects/msrenovation/before-after/after/msrenovation-after-open-plan-kitchen-living-01.jpg',
+    ],
   },
 };
 

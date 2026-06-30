@@ -17,6 +17,9 @@ export const metadata: Metadata = {
     title: 'M.S. Renovation Gallery - Before and After Home Improvement Photos',
     description: 'Browse our recent renovation and improvement projects with before and after photos.',
     url: '/gallery',
+    images: [
+      '/images/projects/msrenovation/before-after/after/msrenovation-after-open-plan-kitchen-living-01.jpg',
+    ],
   },
 };
 
