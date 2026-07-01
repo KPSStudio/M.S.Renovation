@@ -8,8 +8,9 @@ Router), TypeScript, and CSS Modules, deployed on Vercel.
 
 ## Status
 
-Production-ready. Homepage and gallery page are built, styled, and verified working on
-desktop and mobile. The project has been fully migrated to TypeScript with a `src/`
+Production-ready. Homepage, gallery, and five dedicated service pages are built, styled, and
+verified working on desktop and mobile. The project has been fully migrated to TypeScript with
+a `src/`
 directory structure, a darker premium color palette, and a scroll-darkening, shrinking
 navigation header. The original HTML design demos and the JavaScript prototype have been
 removed.
@@ -38,9 +39,16 @@ src/
 │   ├── page.tsx                  Homepage
 │   ├── page.module.css           Homepage-only styles (gallery CTA banner)
 │   ├── globals.css               Color palette, reset, base typography, scroll-animate utility classes
-│   └── gallery/
-│       ├── page.tsx              Gallery ("Our Work") page
-│       └── page.module.css       Gallery page-only styles (header + closing CTA)
+│   ├── gallery/
+│   │   ├── page.tsx              Gallery ("Our Work") page
+│   │   └── page.module.css       Gallery page-only styles (header + closing CTA)
+│   ├── painting-and-decorating-aberdeen/page.tsx   Service page
+│   ├── plastering-aberdeen/page.tsx                Service page
+│   ├── carpentry-and-joinery-aberdeen/page.tsx     Service page
+│   ├── bathroom-renovation-aberdeen/page.tsx       Service page
+│   ├── property-repairs-aberdeen/page.tsx          Service page
+│   ├── sitemap.ts                Homepage, gallery, and the 5 service pages
+│   └── schema.json               LocalBusiness + BreadcrumbList + 8-question FAQPage
 ├── components/                   layout/Navigation + layout/GalleryNavigation (both shrink +
 │                                 darken on scroll), FadeInSection (generic scroll fade-in
 │                                 wrapper for server-component pages), Hero, Services (5
@@ -49,9 +57,14 @@ src/
 │                                 carousel), ServiceAreas, FAQ (animated accordion), Contact
 │                                 (two-column: quick contact + form), BeforeAfterGallery (two
 │                                 independent before/after photo carousels, side by side on
-│                                 desktop), Footer — each with a co-located .module.css
+│                                 desktop), Footer (with a row of service-page links),
+│                                 ServicePage + ServiceFeatureGrid (reusable layout and animated
+│                                 hover cards for the 5 service pages). Each has a co-located
+│                                 .module.css.
+├── data/services.ts              Single source of truth for the 5 service-page links
 ├── types/index.ts                Shared TypeScript interfaces (Service, Review, etc.)
-└── utils/useScrollAnimation.ts   Intersection Observer hook for scroll fade-ins
+└── utils/                        useScrollAnimation.ts (scroll fade-ins) and useCarousel.ts
+                                  (shared carousel slide/timer logic for Reviews and the gallery)
 public/
 ├── certificate.jpg                Aberdeen Trusted Trader certificate
 ├── photos/                        Empty (.gitkeep only) — real WhatsApp photos were sorted out of here
@@ -177,6 +190,30 @@ npx tsc --noEmit  # type-check only
 - `npm run lint` does not currently run — `next lint` was removed in Next.js 16 and this
   project has never had a standalone ESLint config set up. Pre-existing gap, not introduced
   by any specific change.
+- There are 5 dedicated service pages (`/painting-and-decorating-aberdeen`,
+  `/plastering-aberdeen`, `/carpentry-and-joinery-aberdeen`, `/bathroom-renovation-aberdeen`,
+  `/property-repairs-aberdeen`), each targeting one service-plus-location search. They share a
+  reusable `ServicePage.tsx` layout, so each route file only supplies its own words and
+  metadata. Their links live once in `src/data/services.ts`, read by the nav dropdown, the
+  homepage cards, the footer, and the sitemap, so those never fall out of sync. See
+  `AGENTS.md`'s "Dedicated Service Pages" section.
+- The homepage service cards are clickable (a "stretched link" so the whole card navigates,
+  with "Learn more" pinned to the bottom of every card via a flex column), and the header has a
+  "Services" dropdown listing all five pages. The dropdown is state-driven (click/tap), closing
+  on a second click, an outside click, Escape, choosing a link, or toggling the mobile menu. The
+  service and gallery pages use the simpler `GalleryNavigation`, so cross-navigation between
+  service pages is via the footer links.
+- An SEO pass added a social share image (a real project photo, used because there is no logo
+  yet) across the layout, home, and gallery `openGraph`, switched the Twitter card to
+  `summary_large_image`, made `schema.json`'s FAQ match the visible 8-question FAQ, enriched the
+  LocalBusiness data (business image, real Instagram in `sameAs`, a more specific
+  `["GeneralContractor", "HousePainter"]` type, tidied `priceRange`), and added real opening
+  hours supplied by the client. See `AGENTS.md`'s "SEO Pass" section.
+- Reviews and the Before/After gallery share one carousel hook, `src/utils/useCarousel.ts`,
+  instead of duplicating slide/timer logic. `Navigation.tsx`'s active-section tracking uses an
+  `IntersectionObserver` scroll-spy rather than measuring section offsets on every scroll frame.
+  The contact form's WhatsApp handoff uses `window.location.href` rather than
+  `window.open('_blank')`, which some mobile browsers block.
 - This repo also has an `AGENTS.md` (previously `agent.md`) tracking the project's status,
   business facts, and a running log of changes round-by-round — useful if you want the fuller
   story behind any of the notes above.

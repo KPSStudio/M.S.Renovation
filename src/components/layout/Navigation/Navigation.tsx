@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, type ReactElement } from 'react';
+import { useEffect, useRef, useState, type ReactElement } from 'react';
 import Link from 'next/link';
 import type { NavLink } from '@/types';
 import { SERVICE_PAGES } from '@/data/services';
@@ -22,11 +22,14 @@ import styles from './Navigation.module.css';
   - Active-section tracking: an IntersectionObserver scroll-spy marks
     the section currently in view, instead of measuring every section's
     offset on every scroll frame.
-  - Escape-to-close: Escape closes the open mobile menu and/or the
-    Services dropdown.
+  - Escape-to-close and outside-click-to-close for the Services dropdown
+    and mobile menu.
 
-  The Services dropdown opens on hover or keyboard focus on desktop (via
-  CSS) and on tap on mobile (via the isServicesOpen state).
+  The Services dropdown is driven entirely by the isServicesOpen state
+  (click/tap to toggle) rather than CSS hover, so it behaves identically
+  and predictably on desktop and mobile: it opens on click, closes on a
+  second click, on Escape, on an outside click, on choosing a link, and
+  whenever the mobile menu is toggled.
 */
 const NAVIGATION_LINKS: NavLink[] = [
   { label: 'Services', href: '#services', id: 'services' },
@@ -52,6 +55,9 @@ const Navigation = (): ReactElement => {
   const [activeSection, setActiveSection] = useState<string>('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [isServicesOpen, setIsServicesOpen] = useState<boolean>(false);
+
+  /* Wraps the Services dropdown so an outside click can be detected */
+  const dropdownRef = useRef<HTMLLIElement>(null);
 
   // Header darken effect. Reading scrollY does not trigger layout, so a
   // plain passive listener is cheap enough without throttling.
@@ -92,7 +98,7 @@ const Navigation = (): ReactElement => {
     return () => observer.disconnect();
   }, []);
 
-  // Close the mobile menu and the Services dropdown on Escape.
+  // Close the mobile menu and Services dropdown on Escape.
   useEffect(() => {
     if (!isMobileMenuOpen && !isServicesOpen) return;
 
@@ -106,6 +112,27 @@ const Navigation = (): ReactElement => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isMobileMenuOpen, isServicesOpen]);
+
+  // Close the Services dropdown when clicking/tapping outside of it.
+  useEffect(() => {
+    if (!isServicesOpen) return;
+
+    const handlePointerDown = (event: MouseEvent): void => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsServicesOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handlePointerDown);
+    return () => document.removeEventListener('mousedown', handlePointerDown);
+  }, [isServicesOpen]);
+
+  // Toggles the mobile menu and always resets the Services dropdown, so
+  // the submenu never lingers when the menu is opened or closed.
+  const toggleMobileMenu = (): void => {
+    setIsMobileMenuOpen((open) => !open);
+    setIsServicesOpen(false);
+  };
 
   // Closes the mobile menu and Services dropdown whenever a link is clicked
   const handleLinkClick = (): void => {
@@ -127,7 +154,7 @@ const Navigation = (): ReactElement => {
         <button
           type="button"
           className={styles.mobileMenuButton}
-          onClick={() => setIsMobileMenuOpen((open) => !open)}
+          onClick={toggleMobileMenu}
           aria-label="Toggle navigation menu"
           aria-expanded={isMobileMenuOpen}
         >
@@ -140,7 +167,7 @@ const Navigation = (): ReactElement => {
           }`}
         >
           {/* Services dropdown, linking out to the dedicated service pages */}
-          <li className={styles.dropdown}>
+          <li className={styles.dropdown} ref={dropdownRef}>
             <button
               type="button"
               className={`${styles.navigationLink} ${styles.dropdownToggle}`}
@@ -148,7 +175,10 @@ const Navigation = (): ReactElement => {
               aria-expanded={isServicesOpen}
               aria-haspopup="true"
             >
-              Services <span aria-hidden="true">▾</span>
+              Services{' '}
+              <span className={styles.dropdownArrow} aria-hidden="true">
+                ▾
+              </span>
             </button>
             <ul
               className={`${styles.dropdownMenu} ${

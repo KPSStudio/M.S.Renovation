@@ -154,10 +154,18 @@
   z-index: 110;
 }
 
-.dropdown:hover .dropdownMenu,
-.dropdown:focus-within .dropdownMenu,
 .dropdownMenu.dropdownMenuOpen {
   display: block;
+}
+
+/* Arrow flips when the dropdown is open, giving a click visible feedback */
+.dropdownArrow {
+  display: inline-block;
+  transition: transform var(--transition-normal);
+}
+
+.dropdownToggle[aria-expanded='true'] .dropdownArrow {
+  transform: rotate(180deg);
 }
 
 .dropdownLink {
@@ -198,8 +206,9 @@
     display: flex;
   }
 
-  /* On mobile the submenu sits inline under the toggle (no absolute
-     panel) and opens only via the tap toggle, since there is no hover. */
+  /* On mobile the submenu sits inline under the toggle rather than as an
+     absolute panel. Opening is driven entirely by the isServicesOpen
+     state (tap to toggle), the same as on desktop. */
   .dropdown {
     position: static;
   }
@@ -210,11 +219,6 @@
     border: none;
     padding: 0 0 0 var(--spacing-md);
     min-width: 0;
-  }
-
-  .dropdown:hover .dropdownMenu,
-  .dropdown:focus-within .dropdownMenu {
-    display: none;
   }
 
   .dropdownMenu.dropdownMenuOpen {

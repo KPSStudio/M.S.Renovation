@@ -38,9 +38,16 @@ M.S.Renovation/
 │   │   ├── page.tsx (Homepage)
 │   │   ├── page.module.css
 │   │   ├── globals.css (palette, reset, base typography, scroll-animate utilities)
-│   │   └── gallery/
-│   │       ├── page.tsx (Gallery page)
-│   │       └── page.module.css
+│   │   ├── gallery/
+│   │   │   ├── page.tsx (Gallery page)
+│   │   │   └── page.module.css
+│   │   ├── painting-and-decorating-aberdeen/page.tsx (service page)
+│   │   ├── plastering-aberdeen/page.tsx (service page)
+│   │   ├── carpentry-and-joinery-aberdeen/page.tsx (service page)
+│   │   ├── bathroom-renovation-aberdeen/page.tsx (service page)
+│   │   ├── property-repairs-aberdeen/page.tsx (service page)
+│   │   ├── sitemap.ts (homepage, gallery, and the 5 service pages)
+│   │   └── schema.json (LocalBusiness, BreadcrumbList, 8-question FAQPage)
 │   ├── components/
 │   │   ├── layout/Navigation/ + layout/GalleryNavigation/ (homepage-only full nav vs gallery-only simplified nav, both shrink/darken on scroll)
 │   │   ├── FadeInSection.tsx (generic scroll fade-in wrapper for server-component pages, e.g. the gallery page)
@@ -53,9 +60,12 @@ M.S.Renovation/
 │   │   ├── FAQ.tsx + FAQ.module.css
 │   │   ├── Contact.tsx + Contact.module.css
 │   │   ├── BeforeAfterGallery.tsx + BeforeAfterGallery.module.css (real client photos, side-by-side Before/After carousels on desktop: see "Photo Organization" section below)
-│   │   └── Footer.tsx + Footer.module.css
+│   │   ├── Footer.tsx + Footer.module.css (includes a row of links to the 5 service pages)
+│   │   ├── ServicePage.tsx + ServicePage.module.css (reusable layout for the 5 service pages)
+│   │   └── ServiceFeatureGrid.tsx + ServiceFeatureGrid.module.css (animated "what's included" hover cards)
+│   ├── data/services.ts (single source of truth for the 5 service-page links)
 │   ├── types/index.ts (shared interfaces)
-│   └── utils/useScrollAnimation.ts (Intersection Observer hook)
+│   └── utils/ (useScrollAnimation.ts Intersection Observer hook; useCarousel.ts shared carousel slide/timer logic)
 ├── public/
 │   ├── certificate.jpg
 │   ├── robots.txt
@@ -468,11 +478,114 @@ folders, since the existing flat `src/components/` layout already satisfies that
 own rule to "follow the existing structure," and restructuring working components for no
 functional reason would be unnecessary churn.
 
+## SEO Pass: Social Share Image, Structured Data, and Performance
+
+A review of the whole project (already a strong foundation: canonicals, sitemap, robots,
+metadata, structured data, descriptive alt text) surfaced a set of quick, high-value fixes,
+applied directly:
+
+- **Social share image (Open Graph / Twitter)**: the site had no preview image, so links
+  shared on WhatsApp, Facebook, or X showed text only. A real finished-project photo (the
+  open-plan kitchen and living room) is now the share image in `layout.tsx`, and is repeated on
+  the home page and gallery `openGraph` (Next.js does not inherit `openGraph.images` into a
+  child route that defines its own `openGraph`, so it has to be set on each). The Twitter card
+  was switched from `summary` to `summary_large_image`. No logo exists yet, so a real photo was
+  used rather than inventing a logo.
+- **FAQ structured data now matches the page**: `schema.json`'s `FAQPage` previously listed
+  only 3 questions, with wording that did not match the visible 8-question FAQ. Google wants
+  these to match, so it was regenerated from the same 8 questions and answers in `FAQ.tsx`.
+- **LocalBusiness structured data enriched**: added a business `image` (real project photo),
+  added the real Instagram profile to `sameAs` (it was linked in `Contact.tsx` but missing from
+  the schema), switched the type from generic `LocalBusiness` to the more specific
+  `["GeneralContractor", "HousePainter"]`, and cleaned `priceRange` to the conventional
+  "££".
+- **Opening hours added (from client-supplied data, not invented)**: the client provided real
+  hours (Monday to Friday 08:00 to 18:00, Saturday 09:00 to 17:00, Sunday closed), added as
+  `openingHoursSpecification`. Hours were deliberately left out until the client supplied them,
+  rather than guessed (the same honesty rule applied to insurance status and response times
+  elsewhere in this project).
+- **Navigation performance**: `Navigation.tsx` previously measured every homepage section's
+  `offsetTop` on every scroll event, forcing a layout recalculation each frame. Replaced with
+  an `IntersectionObserver` scroll-spy for the active section (a thin band roughly a third down
+  the viewport), plus a cheap passive scroll listener only for the darken-past-50px state. Also
+  added Escape-to-close for the mobile menu.
+- **Shared carousel logic**: the Reviews carousel and the gallery Before/After carousels had
+  near-identical slide/timer logic duplicated. Extracted into `src/utils/useCarousel.ts`
+  (current slide, go to slide, next, previous, and an auto-rotate timer that resets on any
+  slide change). `Reviews.tsx` and `BeforeAfterGallery.tsx` now both use it. The auto-advance
+  uses a functional state update, removing the stale-closure/exhaustive-deps issue the
+  originals had.
+- **Contact WhatsApp reliability**: the quote form opened WhatsApp via
+  `window.open(..., '_blank')`, which some mobile browsers block silently. Switched to
+  `window.location.href` so the handoff is not blocked.
+
+Deliberately not done: reformatting the codebase's quote-style inconsistency (purely cosmetic,
+would produce a large noisy diff for no functional gain).
+
+## Dedicated Service Pages, Clickable Cards, and Services Dropdown
+
+The single biggest remaining SEO opportunity was that the whole site was only two pages, so it
+could realistically rank for only one or two phrases. Five dedicated service pages were added,
+each targeting one service-plus-location search:
+
+- `/painting-and-decorating-aberdeen`
+- `/plastering-aberdeen`
+- `/carpentry-and-joinery-aberdeen`
+- `/bathroom-renovation-aberdeen`
+- `/property-repairs-aberdeen`
+
+Structure and reuse:
+
+- **`src/data/services.ts`** is the single source of truth for the service-page links (label,
+  matching homepage card title, href). The nav dropdown, homepage cards, footer, and sitemap
+  all read from it, so they cannot drift apart.
+- **`src/components/ServicePage.tsx`** (plus `ServicePage.module.css`) is a reusable layout
+  every service route renders, so each route file (`src/app/<slug>/page.tsx`) only supplies its
+  own words, metadata, and a small `Service` structured-data block. It uses the simplified
+  `GalleryNavigation` (the homepage anchor menu would not resolve on a separate route). The
+  shared Footer comes from the root layout.
+- **`src/components/ServiceFeatureGrid.tsx`** (plus its CSS) renders the "what's included"
+  list as a grid of cards that lift, gain a stone border and shadow, show a light sweep on
+  hover, and fade in with staggered timing, matching the homepage service cards.
+- **Page content** is roughly 350 to 450 words each (focused, but not thin enough for Google to
+  treat as low-value): a larger lead paragraph, a normal intro, the feature-card grid, a
+  quality/process paragraph, a highlighted free-quote promise box (gold left accent, nudges on
+  hover), and the covered areas as rounded chips that lift on hover. A star rating badge scales
+  in in the header. All copy is built only from established facts (Trusted Trader, 5.0 from 16
+  reviews, free no-obligation quotes, the confirmed areas). Each page uses a relevant real
+  project photo as its share image.
+- **Clickable homepage cards**: `Services.tsx` cards now link to their page via a "stretched
+  link" (a real "Learn more" link whose `::after` covers the whole card), so the card keeps its
+  scroll-animation ref and hover styles while being fully clickable and keyboard-accessible.
+- **"Learn more" pinned to the bottom**: cards were made a flex column with the CTA at
+  `margin-top: auto`, so "Learn more" sits in the same place on every card regardless of how
+  much text is above it (cards in a row already stretch to equal height).
+- **Services dropdown in the header**: the plain "Services" anchor link was replaced with a
+  dropdown listing all five pages. It is driven entirely by click/tap state (not CSS hover),
+  and closes on a second click, an outside click, Escape, choosing a link, or toggling the
+  mobile menu. The arrow flips when open. An earlier version leaned on CSS `:hover`/
+  `:focus-within`, which fought the click state: after clicking, the button kept focus so
+  `:focus-within` held the menu open and clicking again appeared to do nothing, and on mobile
+  it would not close. The state-driven version fixes both.
+- **Footer**: a row of links to all five service pages was added above the copyright lines (on
+  every page, so the service pages cross-link even though their simplified header has no
+  dropdown).
+- **Sitemap**: `sitemap.ts` now generates entries for all five service pages from
+  `SERVICE_PAGES`.
+
+Note: the Services dropdown appears on the homepage header only; the service and gallery pages
+use the simpler `GalleryNavigation`, with the footer links providing cross-navigation. This can
+be switched to show the full dropdown on every page if wanted.
+
+After deploy: submit the sitemap in Google Search Console and request indexing for the five new
+pages.
+
 ## Next Steps
 1. ~~Drop real before/after project photos into `public/photos/` and wire them into the
    gallery~~ — Done; see "Photo Organization" above (shown as two independent Before/After
    carousels, not tied to named projects).
-2. Deploy to Vercel
+2. Deploy to Vercel, then submit the sitemap and request indexing for the 5 new service pages
+   in Google Search Console
 3. **Needs manual review/client input**:
    - If the client can identify which before photos match which after photos (and what each
      job actually was), `BeforeAfterGallery.tsx` can be upgraded to real paired case studies
